@@ -1,3 +1,5 @@
+#fisierul de editat se afla in lib
+
 # frigider_virtual
 
 A new Flutter project.
