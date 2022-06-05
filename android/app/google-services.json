@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "144994644138",
+    "firebase_url": "https://virtual-fridge-fed65-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "virtual-fridge-fed65",
+    "storage_bucket": "virtual-fridge-fed65.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:144994644138:android:1d734d5a9995146d8ae0d3",
+        "android_client_info": {
+          "package_name": "com.app.frigider_virtual"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "144994644138-fb57f2mp932ehpu8t3ff5v6g9qjqc20r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYCk5hER_4S_I_87CwMkfPqSbfKz5XJYg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "144994644138-fb57f2mp932ehpu8t3ff5v6g9qjqc20r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:144994644138:android:454a51ac651c91288ae0d3",
+        "android_client_info": {
+          "package_name": "com.example.frigider_virtual"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "144994644138-fb57f2mp932ehpu8t3ff5v6g9qjqc20r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYCk5hER_4S_I_87CwMkfPqSbfKz5XJYg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "144994644138-fb57f2mp932ehpu8t3ff5v6g9qjqc20r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
