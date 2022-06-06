@@ -78,6 +78,8 @@ class Product extends StatefulWidget {
 }
 
 class _ProductState extends State<Product> {
+  bool changeName = false;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -93,17 +95,29 @@ class _ProductState extends State<Product> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Expanded(
-                      child: Text(widget.productName,
+                      child: TextFormField(
+                          initialValue: widget.productName,
+                          minLines: 1,
+                          maxLines: 3,
+                          maxLength: 45,
+                          enabled: changeName,
+                          textAlignVertical: TextAlignVertical.center,
                           style: const TextStyle(
-                            decoration: TextDecoration.none,
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                             fontSize: 26,
+                          ),
+                          decoration: const InputDecoration(
+                            hintText: "Product name:",
+                            border: InputBorder.none,
+                            counterText: "",
                           ))),
                   SizedBox(
                       width: 40,
                       child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            setState(() => changeName = !changeName);
+                          },
                           style: ElevatedButton.styleFrom(
                             primary: Colors.white,
                             elevation: 0.0,
