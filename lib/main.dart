@@ -1,12 +1,28 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-
+import 'extentions.dart';
 import 'MyIcons.dart';
 
 void main() {
   runApp(const MyApp());
 }
+
+Map<int, Color> color =
+{
+  50:Color.fromRGBO(14, 77, 5, .1),
+  100:Color.fromRGBO(14, 77, 5, .2),
+  200:Color.fromRGBO(14, 77, 5, .3),
+  300:Color.fromRGBO(14, 77, 5, .4),
+  400:Color.fromRGBO(14, 77, 5, .5),
+  500:Color.fromRGBO(14, 77, 5, .6),
+  600:Color.fromRGBO(14, 77, 5, .7),
+  700:Color.fromRGBO(14, 77, 5, .8),
+  800:Color.fromRGBO(14, 77, 5, .9),
+  900:Color.fromRGBO(14, 77, 5, 1),
+};
+
+MaterialColor colorCustom = MaterialColor(0xff0e4d05, color);
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -14,8 +30,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo' ,
-      theme: ThemeData(primarySwatch: Colors.lightGreen,),
+      title: 'Flutter Demo',
+      theme: ThemeData(primarySwatch: colorCustom),
       home: const MyHomePage(title: 'Frigider virtual'),
     );
   }
@@ -32,6 +48,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int currentIndex = 0;
   PageController pageController = PageController();
+
+
 
   void onTap(int index){
     setState((){ currentIndex = index; });
@@ -61,23 +79,24 @@ class _MyHomePageState extends State<MyHomePage> {
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(MyIcons.fridge),
-              label: 'Fridge',
-              backgroundColor: Colors.lightGreen,
+              label: 'Products',
+              backgroundColor: Color(0xff0e4d05),
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.food_bank),
               label: 'Recipes',
-              backgroundColor: Colors.lightGreen,
+              backgroundColor: Color(0xff0e4d05),
+
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.shop),
+              icon: Icon(Icons.store),
               label: 'Market',
-              backgroundColor: Colors.lightGreen,
+              backgroundColor: Color(0xff0e4d05),
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),
               label: 'Profile',
-              backgroundColor: Colors.lightGreen,
+              backgroundColor: Color(0xff0e4d05),
             )
         ],
       currentIndex: currentIndex,
@@ -91,7 +110,6 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-
 
 class DatabaseService{
 
