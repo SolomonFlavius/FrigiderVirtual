@@ -22,14 +22,12 @@ class _MyProductsPageState extends State<MyProductsPage> {
             gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors:[
-                  Color(0x665ac18e),
-                  Color(0x995ac18e),
-                  Color(0xcc5ac18e),
-                  Color(0xff5ac18e),
-                ]
-            )
-        ),
+                colors: [
+              Color(0x665ac18e),
+              Color(0x995ac18e),
+              Color(0xcc5ac18e),
+              Color(0xff5ac18e),
+            ])),
         child: ListView(
           children: [
             Center(
@@ -101,8 +99,32 @@ class _ProductState extends State<Product> {
                             color: Colors.black,
                             fontSize: 34,
                           ))),
-                  const Icon(CupertinoIcons.pencil, size: 40),
-                  const Icon(Icons.list_alt, size: 40)
+                  SizedBox(
+                      width: 40,
+                      child: ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            elevation: 0.0,
+                            shadowColor: Colors.transparent,
+                            onPrimary: Colors.green,
+                            padding: const EdgeInsets.only(right: 5),
+                          ),
+                          child: const Icon(CupertinoIcons.pencil,
+                              size: 40, color: Colors.black))),
+                  SizedBox(
+                      width: 40,
+                      child: ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            elevation: 0.0,
+                            shadowColor: Colors.transparent,
+                            onPrimary: Colors.green,
+                            padding: const EdgeInsets.only(right: 20),
+                          ),
+                          child: const Icon(Icons.list_alt,
+                              size: 40, color: Colors.black))),
                 ],
               ),
             )));
