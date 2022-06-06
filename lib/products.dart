@@ -15,34 +15,54 @@ class MyProductsPage extends StatefulWidget {
 class _MyProductsPageState extends State<MyProductsPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      color: Colors.greenAccent,
-      child: ListView(
-        children: [
-          Center(
-            child: Text(
-              widget.title,
-              style: const TextStyle(
-                  decoration: TextDecoration.none, color: Colors.white),
+    return Scaffold(
+      body: Container(
+        alignment: Alignment.center,
+        decoration: const BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors:[
+                  Color(0x665ac18e),
+                  Color(0x995ac18e),
+                  Color(0xcc5ac18e),
+                  Color(0xff5ac18e),
+                ]
+            )
+        ),
+        child: ListView(
+          children: [
+            Center(
+              child: Text(
+                widget.title,
+                style: const TextStyle(
+                    fontSize: 40,
+                    decoration: TextDecoration.none,
+                    color: Colors.white),
+              ),
             ),
-          ),
-          Center(
-            child: Product(
-              productName: "Cheese",
+            Center(
+              child: Product(
+                productName: "Cheese",
+              ),
             ),
-          ),
-          Center(
-            child: Product(
-              productName: "Bread",
+            Center(
+              child: Product(
+                productName: "Bread",
+              ),
             ),
-          ),
-          Center(
-            child: Product(
-              productName: "Chocolate",
+            Center(
+              child: Product(
+                productName: "Chocolate",
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: Colors.white,
+        child: const Icon(Icons.add, color: Colors.black, size: 40),
       ),
     );
   }
