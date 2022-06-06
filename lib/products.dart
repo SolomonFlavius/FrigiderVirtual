@@ -86,9 +86,9 @@ class _ProductState extends State<Product> {
             decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(color: Colors.green),
-                borderRadius: BorderRadius.circular(15)),
+                borderRadius: BorderRadius.circular(45)),
             child: Padding(
-              padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+              padding: const EdgeInsets.only(left: 14.0, right: 12.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -97,7 +97,8 @@ class _ProductState extends State<Product> {
                           style: const TextStyle(
                             decoration: TextDecoration.none,
                             color: Colors.black,
-                            fontSize: 34,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 26,
                           ))),
                   SizedBox(
                       width: 40,
