@@ -79,6 +79,13 @@ class Product extends StatefulWidget {
 
 class _ProductState extends State<Product> {
   bool changeName = false;
+  FocusNode myFocusNode = FocusNode();
+
+  @override
+  void dispose() {
+    myFocusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,28 +102,39 @@ class _ProductState extends State<Product> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Expanded(
-                      child: TextFormField(
-                          initialValue: widget.productName,
-                          minLines: 1,
-                          maxLines: 3,
-                          maxLength: 45,
-                          enabled: changeName,
-                          textAlignVertical: TextAlignVertical.center,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 26,
-                          ),
-                          decoration: const InputDecoration(
-                            hintText: "Product name:",
-                            border: InputBorder.none,
-                            counterText: "",
-                          ))),
+                      child: SingleChildScrollView(
+                          keyboardDismissBehavior:
+                              ScrollViewKeyboardDismissBehavior.onDrag,
+                          child: TextFormField(
+                              initialValue: widget.productName,
+                              minLines: 1,
+                              maxLines: 3,
+                              maxLength: 45,
+                              focusNode: myFocusNode,
+                              enabled: changeName,
+                              textAlignVertical: TextAlignVertical.center,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 26,
+                              ),
+                              decoration: const InputDecoration(
+                                hintText: "Product name:",
+                                border: InputBorder.none,
+                                counterText: "",
+                              )))),
                   SizedBox(
                       width: 40,
                       child: ElevatedButton(
                           onPressed: () {
-                            setState(() => changeName = !changeName);
+                            setState(() => {
+                                  changeName = !changeName,
+                                  if (changeName == true)
+                                    Future.delayed(
+                                        const Duration(milliseconds: 20),
+                                        () => FocusScope.of(context)
+                                            .requestFocus(myFocusNode))
+                                });
                           },
                           style: ElevatedButton.styleFrom(
                             primary: Colors.white,
