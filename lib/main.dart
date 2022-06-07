@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'extentions.dart';
 import 'MyIcons.dart';
+import 'pages/MarketPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -57,20 +58,25 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   final screens = [
-        // FridgePage(),
+        // ProductsPage(),
         // RecipesPage(),
-        // MarketPage(),
+
         // ProfilePage(),
     Container(color: Colors.white),
     Container(color: Colors.grey),
-    Container(color: Colors.blueGrey),
+    MarketPage(),
+    // Container(color: Colors.blueGrey),
     Container(color: Colors.white10)
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar( title: Text(widget.title),),
+      appBar: AppBar(
+          title: Center(
+            child: Text('Frigider Virtual'),
+          )
+      ),
       body: IndexedStack(
         index: currentIndex,
         children: screens,
