@@ -84,16 +84,46 @@ class AddRecepieForm extends StatefulWidget {
 }
 
 class _AddRecepieForm1 extends State<AddRecepieForm> {
-  String recepieName = "No recepie name given";
-  String productName = "No product name given";
+  final recepieName = List<String>;
+  final productName = List<String>;
+  int gram = 0;
 
-  final _controller = TextEditingController();
+  final recepieController = TextEditingController();
+  final productController = TextEditingController();
+  final gramController = TextEditingController();
 
-  @override
-  void dispose() {
+  void disposeRecepie() {
     // Clean up the controller when the widget is disposed.
-    _controller.dispose();
+    recepieController.dispose();
     super.dispose();
+  }
+
+  void disposeProdict() {
+    // Clean up the controller when the widget is disposed.
+    productController.dispose();
+    super.dispose();
+  }
+
+  void disposeGram() {
+    // Clean up the controller when the widget is disposed.
+    gramController.dispose();
+    super.dispose();
+  }
+
+  void clearProduct() {
+    productController.clear();
+    gramController.clear();
+  }
+
+  void clearRecepie() {
+    recepieController.clear();
+    productController.clear();
+    gramController.clear();
+  }
+
+  void printProduct() {
+    print("Product: " + productController.text);
+    print("Quantity: " + gramController.text);
   }
 
   @override
@@ -107,7 +137,7 @@ class _AddRecepieForm1 extends State<AddRecepieForm> {
               Expanded(
                 flex: 3,
                 child: TextField(
-                  onChanged: (value) => recepieName = value,
+                  controller: recepieController,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Enter the recepie name',
@@ -121,7 +151,9 @@ class _AddRecepieForm1 extends State<AddRecepieForm> {
               // Button to add the recepie
               Expanded(
                 child: ElevatedButton(
-                  onPressed: () => _controller.clear(),
+                  onPressed: () {
+                    clearRecepie();
+                  },
                   child: const Text('Add'),
                   style: ElevatedButton.styleFrom(
                     fixedSize: const Size(50, 50),
@@ -135,11 +167,11 @@ class _AddRecepieForm1 extends State<AddRecepieForm> {
         Container(
           child: Row(
             children: <Widget>[
-              // Enter recepie name
+              // Enter product name
               Expanded(
                 flex: 3,
                 child: TextField(
-                  onChanged: (value) => recepieName = value,
+                  controller: productController,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Enter the product name',
@@ -150,9 +182,10 @@ class _AddRecepieForm1 extends State<AddRecepieForm> {
                 height: 100,
                 width: 50,
               ),
-              // Button to add the recepie
+              // Text to add gram of product
               Expanded(
                 child: TextField(
+                  controller: gramController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(labelText: 'g product'),
                 ),
@@ -160,9 +193,13 @@ class _AddRecepieForm1 extends State<AddRecepieForm> {
             ],
           ),
         ),
+        // button to add another product
         Container(
             child: ElevatedButton(
-                onPressed: () => _controller.clear(),
+                onPressed: () {
+                  printProduct();
+                  clearProduct();
+                },
                 child: Text('Add Product'))),
       ],
     );
