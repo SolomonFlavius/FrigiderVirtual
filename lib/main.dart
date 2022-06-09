@@ -22,9 +22,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Auth(),//Se schimba Auth cu MyProductsPage sau altcv pentru a testa pagina
+      home: ShowRecepies(),//Se schimba Auth cu MyProductsPage sau altcv pentru a testa pagina
     );
   }
 }
 
-}
