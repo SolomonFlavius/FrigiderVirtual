@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:frigider_virtual/products.dart';
+import 'package:frigider_virtual/auth.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyProductsPage(title: "My Products"),
+      home: Auth(),//Se schimba Auth cu MyProductsPage pentru a intra pe pagina de lista produse
     );
   }
 }
