@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/rendering.dart';
 
-import 'main.dart';
 import 'package:frigider_virtual/AddRecepieForm.dart';
 
-class ShowRecepies extends State<MyHomePage> {
+class ShowRecepies extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const appTitle = 'Virtual Fridge';
