@@ -25,18 +25,33 @@ class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
   final String title;
   @override
-  State<MyHomePage> createState() => _ShowRecepies();
+  State<MyHomePage> createState() => ShowRecepies();
+}
+
+class ShowRecepies extends State<MyHomePage> {
+  @override
+  Widget build(BuildContext context) {
+    const appTitle = 'Virtual Fridge';
+    return MaterialApp(
+      title: appTitle,
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text(appTitle),
+        ),
+        body: _ShowRecepies(),
+      ),
+    );
+  }
 }
 
 // First Page
-class _ShowRecepies extends State<MyHomePage> {
+class _ShowRecepies extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
+    return Stack(children: <Widget>[
+      Positioned(
+        top: 10,
+        left: 110,
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
           child: const Align(
@@ -48,14 +63,33 @@ class _ShowRecepies extends State<MyHomePage> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => _AddRecepie()));
-        },
-        child: const Icon(Icons.add),
+      Positioned(
+        top: 650,
+        left: 300,
+        child: Container(
+          child: ElevatedButton(
+            child: const Icon(Icons.add),
+            onPressed: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => _AddRecepie()));
+            },
+          ),
+        ),
       ),
-    );
+      Positioned(
+        top: 650,
+        right: 300,
+        child: Container(
+          child: ElevatedButton(
+            child: const Icon(Icons.soup_kitchen_outlined),
+            onPressed: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => _AddRecepie()));
+            },
+          ),
+        ),
+      ),
+    ]);
   }
 }
 
@@ -153,8 +187,10 @@ class _AddRecepieForm1 extends State<AddRecepieForm> {
                 child: ElevatedButton(
                   onPressed: () {
                     clearRecepie();
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => const MyApp()));
                   },
-                  child: const Text('Add'),
+                  child: const Icon(Icons.add),
                   style: ElevatedButton.styleFrom(
                     fixedSize: const Size(50, 50),
                     shape: const CircleBorder(),
