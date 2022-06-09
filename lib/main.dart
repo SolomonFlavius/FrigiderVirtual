@@ -82,10 +82,7 @@ class _ShowRecepies extends StatelessWidget {
         child: Container(
           child: ElevatedButton(
             child: const Icon(Icons.soup_kitchen_outlined),
-            onPressed: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => _AddRecepie()));
-            },
+            onPressed: () {},
           ),
         ),
       ),
@@ -162,81 +159,79 @@ class _AddRecepieForm1 extends State<AddRecepieForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Stack(
       children: <Widget>[
-        Container(
-          child: Row(
-            children: <Widget>[
-              // Enter recepie name
-              Expanded(
-                flex: 3,
-                child: TextField(
-                  controller: recepieController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Enter the recepie name',
-                  ),
-                ),
+        Positioned(
+          top: 20,
+          left: 10,
+          width: 250,
+          child: Container(
+            child: TextField(
+              controller: recepieController,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Enter the recepie name',
               ),
-              Container(
-                height: 100,
-                width: 50,
-              ),
-              // Button to add the recepie
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: () {
-                    clearRecepie();
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const MyApp()));
-                  },
-                  child: const Icon(Icons.add),
-                  style: ElevatedButton.styleFrom(
-                    fixedSize: const Size(50, 50),
-                    shape: const CircleBorder(),
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
         ),
-        Container(
-          child: Row(
-            children: <Widget>[
-              // Enter product name
-              Expanded(
-                flex: 3,
-                child: TextField(
-                  controller: productController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Enter the product name',
-                  ),
-                ),
+        Positioned(
+          top: 20,
+          right: 35,
+          child: Container(
+            child: ElevatedButton(
+              onPressed: () {
+                clearRecepie();
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const MyApp()));
+              },
+              child: const Icon(Icons.add),
+              style: ElevatedButton.styleFrom(
+                fixedSize: const Size(50, 50),
+                shape: const CircleBorder(),
               ),
-              Container(
-                height: 100,
-                width: 50,
+            ),
+          ),
+        ),
+        Positioned(
+          top: 120,
+          left: 10,
+          width: 250,
+          child: Container(
+            // Enter product name
+            child: TextField(
+              controller: productController,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Enter the product name',
               ),
-              // Text to add gram of product
-              Expanded(
-                child: TextField(
-                  controller: gramController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(labelText: 'g product'),
-                ),
-              ),
-            ],
+            ),
+          ),
+        ),
+        // Text to add gram of product
+        Positioned(
+          top: 120,
+          right: 10,
+          width: 100,
+          child: Container(
+            child: TextField(
+              controller: gramController,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(labelText: 'g product'),
+            ),
           ),
         ),
         // button to add another product
-        Container(
-            child: ElevatedButton(
-                onPressed: () {
-                  printProduct();
-                  clearProduct();
-                },
-                child: Text('Add Product'))),
+        Positioned(
+            top: 200,
+            left: 150,
+            child: Container(
+                child: ElevatedButton(
+                    onPressed: () {
+                      printProduct();
+                      clearProduct();
+                    },
+                    child: Text('Add Product')))),
       ],
     );
   }
