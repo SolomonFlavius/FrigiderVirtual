@@ -1,10 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/rendering.dart';
-
 import 'package:frigider_virtual/ShowRecepies.dart';
 import 'package:frigider_virtual/AddRecepieForm.dart';
+import 'package:frigider_virtual/products.dart';
+import 'package:frigider_virtual/auth.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -12,21 +14,17 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Virtual Fridge'),
+      home: Auth(),//Se schimba Auth cu MyProductsPage sau altcv pentru a testa pagina
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-  final String title;
-  @override
-  State<MyHomePage> createState() => ShowRecepies();
 }
