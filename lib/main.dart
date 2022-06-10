@@ -1,14 +1,18 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/rendering.dart';
-import 'package:frigider_virtual/ShowRecipe.dart';
-import 'package:frigider_virtual/AddRecipeForm.dart';
-import 'package:frigider_virtual/products.dart';
+import 'package:frigider_virtual/settings/notification_management.dart';
+import 'firebase_options.dart';
+import 'package:flutter/material.dart';
 import 'package:frigider_virtual/auth.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
+      .then(
+    (value) => {
+      runApp(const MyApp()),
+      NotificationManagement().configure(),
+    },
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -22,7 +26,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home:
-          ShowRecipes(), //Se schimba Auth cu MyProductsPage sau altcv pentru a testa pagina
+          Auth(), //Se schimba Auth cu MyProductsPage sau altcv pentru a testa pagina
     );
   }
 }

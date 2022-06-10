@@ -30,6 +30,13 @@
             {
               "client_id": "144994644138-fb57f2mp932ehpu8t3ff5v6g9qjqc20r.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "144994644138-rt3q33eqcvd27q9tj0t8o1la0vhgid66.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.frigiderVirtual"
+              }
             }
           ]
         }
@@ -59,6 +66,13 @@
             {
               "client_id": "144994644138-fb57f2mp932ehpu8t3ff5v6g9qjqc20r.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "144994644138-rt3q33eqcvd27q9tj0t8o1la0vhgid66.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.frigiderVirtual"
+              }
             }
           ]
         }
