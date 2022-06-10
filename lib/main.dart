@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frigider_virtual/auth.dart';
+import 'package:frigider_virtual/products.dart';
 
 
 void main() {
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Auth(),//Se schimba Auth cu MyProductsPage sau altcv pentru a testa pagina
+      home: const MyProductsPage(),//Se schimba Auth cu MyProductsPage sau altcv pentru a testa pagina
     );
   }
 }
