@@ -85,9 +85,8 @@ class NotificationManagement {
       'High Importance Notifications', // title
       importance: Importance.max,
     );
-    // todo change later the icon for the channel
     const initializationSettingsAndroid = AndroidInitializationSettings(
-        '@mipmap/ic_launcher'); // <- default icon name is @mipmap/ic_launcher
+        '@mipmap/logo'); // <- default icon name is @mipmap/ic_launcher
     const initializationSettingsIOS = IOSInitializationSettings();
     const initializationSettings = InitializationSettings(
         android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
