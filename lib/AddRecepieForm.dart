@@ -6,7 +6,18 @@ import 'package:flutter/rendering.dart';
 import 'main.dart';
 import 'ShowRecepies.dart';
 
+<<<<<<< Updated upstream:lib/AddRecepieForm.dart
 class AddRecepie extends StatelessWidget {
+=======
+final Map<String, List<String>> products = {};
+final Map<String, List<int>> quantities = {};
+int recipeInteger = 0;
+List<String> recipes = [];
+List<String> product = [];
+List<int> quantity = [];
+
+class AddRecipe extends StatelessWidget {
+>>>>>>> Stashed changes:lib/AddRecipeForm.dart
   @override
   Widget build(BuildContext context) {
     const appTitle = 'Virtual Fridge';
@@ -36,7 +47,7 @@ class _AddRecepieForm1 extends State<AddRecepieForm> {
 
   final recepieController = TextEditingController();
   final productController = TextEditingController();
-  final gramController = TextEditingController();
+  final quantityController = TextEditingController();
 
   void disposeRecepie() {
     // Clean up the controller when the widget is disposed.
@@ -50,26 +61,32 @@ class _AddRecepieForm1 extends State<AddRecepieForm> {
     super.dispose();
   }
 
-  void disposeGram() {
+  void disposeQuantity() {
     // Clean up the controller when the widget is disposed.
-    gramController.dispose();
+    quantityController.dispose();
     super.dispose();
   }
 
   void clearProduct() {
     productController.clear();
-    gramController.clear();
+    quantityController.clear();
   }
 
   void clearRecepie() {
     recepieController.clear();
     productController.clear();
+<<<<<<< Updated upstream:lib/AddRecepieForm.dart
     gramController.clear();
+=======
+    quantityController.clear();
+    product = [];
+    quantity = [];
+>>>>>>> Stashed changes:lib/AddRecipeForm.dart
   }
 
   void printProduct() {
     print("Product: " + productController.text);
-    print("Quantity: " + gramController.text);
+    print("Quantity: " + quantityController.text);
   }
 
   @override
@@ -96,6 +113,15 @@ class _AddRecepieForm1 extends State<AddRecepieForm> {
           child: Container(
             child: ElevatedButton(
               onPressed: () {
+<<<<<<< Updated upstream:lib/AddRecepieForm.dart
+=======
+                recipes.add(recipeController.text);
+                products[recipes[recipeInteger]] = product;
+                quantities[recipes[recipeInteger]] = quantity;
+                recipeInteger++;
+                print(recipeInteger);
+                print(products);
+>>>>>>> Stashed changes:lib/AddRecipeForm.dart
                 clearRecepie();
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const MyApp()));
@@ -130,7 +156,7 @@ class _AddRecepieForm1 extends State<AddRecepieForm> {
           width: 100,
           child: Container(
             child: TextField(
-              controller: gramController,
+              controller: quantityController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(labelText: 'g product'),
             ),
@@ -144,6 +170,9 @@ class _AddRecepieForm1 extends State<AddRecepieForm> {
                 child: ElevatedButton(
                     onPressed: () {
                       printProduct();
+                      product.add(productController.text);
+                      int s = int.parse(quantityController.text);
+                      quantity.add(s);
                       clearProduct();
                     },
                     child: Text('Add Product')))),
