@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/rendering.dart';
+import 'dart:collection';
 
 import 'main.dart';
-import 'ShowRecepies.dart';
+import 'ShowRecipe.dart';
 
-class AddRecepie extends StatelessWidget {
+List<String> recepies = [];
+HashMap<String, List<List<String>>> products = HashMap();
+
+class AddRecipe extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const appTitle = 'Virtual Fridge';
@@ -16,31 +20,27 @@ class AddRecepie extends StatelessWidget {
         appBar: AppBar(
           title: const Text(appTitle),
         ),
-        body: const AddRecepieForm(),
+        body: const AddRecipeForm(),
       ),
     );
   }
 }
 
-class AddRecepieForm extends StatefulWidget {
-  const AddRecepieForm({super.key});
+class AddRecipeForm extends StatefulWidget {
+  const AddRecipeForm({super.key});
 
   @override
   _AddRecepieForm1 createState() => _AddRecepieForm1();
 }
 
-class _AddRecepieForm1 extends State<AddRecepieForm> {
-  final recepieName = List<String>;
-  final productName = List<String>;
-  int gram = 0;
-
-  final recepieController = TextEditingController();
+class _AddRecepieForm1 extends State<AddRecipeForm> {
+  final recipeController = TextEditingController();
   final productController = TextEditingController();
   final gramController = TextEditingController();
 
   void disposeRecepie() {
     // Clean up the controller when the widget is disposed.
-    recepieController.dispose();
+    recipeController.dispose();
     super.dispose();
   }
 
@@ -62,9 +62,12 @@ class _AddRecepieForm1 extends State<AddRecepieForm> {
   }
 
   void clearRecepie() {
-    recepieController.clear();
+    recipeController.clear();
     productController.clear();
     gramController.clear();
+    for (var i = 0; i < recepies.length; i++) {
+      print(recepies[i]);
+    }
   }
 
   void printProduct() {
@@ -82,7 +85,7 @@ class _AddRecepieForm1 extends State<AddRecepieForm> {
           width: 250,
           child: Container(
             child: TextField(
-              controller: recepieController,
+              controller: recipeController,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: 'Enter the recepie name',
@@ -96,6 +99,7 @@ class _AddRecepieForm1 extends State<AddRecepieForm> {
           child: Container(
             child: ElevatedButton(
               onPressed: () {
+                recepies.add(recipeController.text);
                 clearRecepie();
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const MyApp()));

@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/rendering.dart';
-
 import 'main.dart';
-import 'package:frigider_virtual/AddRecepieForm.dart';
+import 'package:frigider_virtual/AddRecipeForm.dart';
 
-class ShowRecepies extends StatelessWidget {
+class ShowRecipes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const appTitle = 'Virtual Fridge';
@@ -16,14 +15,14 @@ class ShowRecepies extends StatelessWidget {
         appBar: AppBar(
           title: const Text(appTitle),
         ),
-        body: _ShowRecepies(),
+        body: _ShowRecipes(),
       ),
     );
   }
 }
 
 // First Page
-class _ShowRecepies extends StatelessWidget {
+class _ShowRecipes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(children: <Widget>[
@@ -42,20 +41,20 @@ class _ShowRecepies extends StatelessWidget {
         ),
       ),
       Positioned(
-        top: 650,
+        top: 500,
         left: 300,
         child: Container(
           child: ElevatedButton(
             child: const Icon(Icons.add),
             onPressed: () {
               Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => AddRecepie()));
+                  .push(MaterialPageRoute(builder: (context) => AddRecipe()));
             },
           ),
         ),
       ),
       Positioned(
-        top: 650,
+        top: 500,
         right: 300,
         child: Container(
           child: ElevatedButton(
