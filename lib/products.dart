@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:frigider_virtual/models/product_item.dart';
 
 class MyProductsPage extends StatefulWidget {
   const MyProductsPage({Key? key}) : super(key: key);
@@ -11,14 +12,14 @@ class MyProductsPage extends StatefulWidget {
 }
 
 class _MyProductsPageState extends State<MyProductsPage> {
-  int maximum = 0;
-  final List<Product> products = <Product>[];
+  final List<ProductItem> products = <ProductItem>[];
 
-  deleteFromList(int index) {
-    setState(() =>
-        {
-          products.removeWhere((element) => element.getValueInList == index),
-        });
+  updateList(int id, String name) {
+    for (var element in products) {
+      if (element.getId == id) {
+        element.setName = name;
+      }
+    }
   }
 
   @override
@@ -37,22 +38,22 @@ class _MyProductsPageState extends State<MyProductsPage> {
               Color(0xff5ac18e),
             ])),
         child: ListView.builder(
-          itemCount: products.length,
-          itemBuilder: (context, index) {
-            return products[index];
-          },
-        ),
+            itemCount: products.length,
+            itemBuilder: (context, index) => Dismissible(
+                key: ValueKey(products[index].getId),
+                onDismissed: (direction) {
+                  setState(() => {products.removeAt(index)});
+                },
+                child: Product(
+                  productName: products[index].getName,
+                  valueInList: products[index].getId,
+                  focusOnInit: products[index].getFocus,
+                  updateFunc: updateList,
+                ))),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          maximum++;
-          setState(() => {
-                products.add(Product(
-                    productName: "",
-                    focusOnInit: true,
-                    valueInList: maximum,
-                    deleteFunc: deleteFromList))
-              });
+          setState(() => products.add(ProductItem("", 0.0, DateTime.now())));
         },
         backgroundColor: Colors.white,
         child: const Icon(Icons.add, color: Colors.black, size: 40),
@@ -67,13 +68,13 @@ class Product extends StatefulWidget {
       required this.productName,
       required this.focusOnInit,
       required this.valueInList,
-      required this.deleteFunc})
+      required this.updateFunc})
       : super(key: key);
 
   final String productName;
   final bool focusOnInit;
   final int valueInList;
-  final Function deleteFunc;
+  final Function updateFunc;
 
   int get getValueInList {
     return valueInList;
@@ -131,23 +132,26 @@ class _ProductState extends State<Product> {
                               keyboardDismissBehavior:
                                   ScrollViewKeyboardDismissBehavior.onDrag,
                               child: TextField(
-                                  controller: myController,
-                                  minLines: 1,
-                                  maxLines: 3,
-                                  maxLength: 45,
-                                  focusNode: myFocusNode,
-                                  enabled: changeName,
-                                  textAlignVertical: TextAlignVertical.center,
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 26,
-                                  ),
-                                  decoration: const InputDecoration(
-                                    hintText: "Product name:",
-                                    border: InputBorder.none,
-                                    counterText: "",
-                                  ))),
+                                controller: myController,
+                                minLines: 1,
+                                maxLines: 3,
+                                maxLength: 45,
+                                focusNode: myFocusNode,
+                                enabled: changeName,
+                                textAlignVertical: TextAlignVertical.center,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 26,
+                                ),
+                                decoration: const InputDecoration(
+                                  hintText: "Product name:",
+                                  border: InputBorder.none,
+                                  counterText: "",
+                                ),
+                                onChanged: (text) =>
+                                    widget.updateFunc(widget.valueInList, text),
+                              )),
                         ],
                       )),
                       SizedBox(
@@ -172,22 +176,19 @@ class _ProductState extends State<Product> {
                               ),
                               child: const Icon(CupertinoIcons.pencil,
                                   size: 40, color: Colors.black))),
-                      SizedBox(
-                          width: 40,
-                          child: ElevatedButton(
-                              onPressed: () {
-                                setState(() =>
-                                    {widget.deleteFunc(widget.valueInList)});
-                              },
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.white,
-                                elevation: 0.0,
-                                shadowColor: Colors.transparent,
-                                onPrimary: Colors.green,
-                                padding: const EdgeInsets.only(right: 20),
-                              ),
-                              child: const Icon(Icons.delete,
-                                  size: 40, color: Colors.red))),
+                      // SizedBox(
+                      //     width: 40,
+                      //     child: ElevatedButton(
+                      //         onPressed: () {},
+                      //         style: ElevatedButton.styleFrom(
+                      //           primary: Colors.white,
+                      //           elevation: 0.0,
+                      //           shadowColor: Colors.transparent,
+                      //           onPrimary: Colors.green,
+                      //           padding: const EdgeInsets.only(right: 20),
+                      //         ),
+                      //         child: const Icon(Icons.delete,
+                      //             size: 40, color: Colors.red))),
                     ],
                   ),
                 ))));
