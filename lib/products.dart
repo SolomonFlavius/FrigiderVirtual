@@ -15,12 +15,11 @@ class MyProductsPage extends StatefulWidget {
 class _MyProductsPageState extends State<MyProductsPage> {
   final List<ProductItem> products = <ProductItem>[];
 
-  updateList(int id, String name, String quantity, DateTime expire) {
+  updateList(ProductItem modifiedProduct) {
     for (var element in products) {
-      if (element.getId == id) {
-        element.setName = name;
-        element.setQuantity = quantity;
-        element.setExpireDate = expire;
+      if (element.getId == modifiedProduct.getId) {
+        element = modifiedProduct;
+        break;
       }
     }
   }
@@ -59,13 +58,10 @@ class _MyProductsPageState extends State<MyProductsPage> {
                               fontSize: 60,
                               fontWeight: FontWeight.bold,
                               color: Colors.white60))),
-                  // Product(
-                  //     productName: "Banane",
-                  //     quantity: "2",
-                  //     expireDate: DateTime.now(),
-                  //     focusOnInit: false,
-                  //     valueInList: 100,
-                  //     updateFunc: updateList),
+                  Product(
+                      product: ProductItem("Banane", "1", DateTime.now(), focus: false),
+                      updateFunc: updateList
+                  ),
                   Expanded(
                       child: ListView.builder(
                           itemCount: products.length,
@@ -75,11 +71,7 @@ class _MyProductsPageState extends State<MyProductsPage> {
                                 setState(() => {products.removeAt(index)});
                               },
                               child: Product(
-                                productName: products[index].getName,
-                                quantity: products[index].getQuantity,
-                                expireDate: products[index].getExpireDate,
-                                valueInList: products[index].getId,
-                                focusOnInit: products[index].getFocus,
+                                product: products[index],
                                 updateFunc: updateList,
                               ))))
                 ]),
@@ -99,24 +91,12 @@ class _MyProductsPageState extends State<MyProductsPage> {
 class Product extends StatefulWidget {
   const Product(
       {Key? key,
-      required this.productName,
-        required this.quantity,
-      required this.expireDate,
-      required this.focusOnInit,
-      required this.valueInList,
+      required this.product,
       required this.updateFunc})
       : super(key: key);
 
-  final String productName;
-  final String quantity;
-  final DateTime expireDate;
-  final bool focusOnInit;
-  final int valueInList;
+  final ProductItem product;
   final Function updateFunc;
-
-  int get getValueInList {
-    return valueInList;
-  }
 
   @override
   State<StatefulWidget> createState() {
@@ -126,17 +106,15 @@ class Product extends StatefulWidget {
 
 class _ProductState extends State<Product> {
   FocusNode myFocusNode = FocusNode();
-  final myController = TextEditingController();
+  final myNameController = TextEditingController();
   final myQuantityController = TextEditingController();
-  late DateTime expireDate;
 
   @override
   void initState() {
     super.initState();
-    myController.text = widget.productName;
-    myQuantityController.text = widget.quantity;
-    expireDate = widget.expireDate;
-    if (widget.focusOnInit == true) {
+    myNameController.text = widget.product.getName;
+    myQuantityController.text = widget.product.getQuantity;
+    if (widget.product.getFocus == true) {
       setState(() => {
             Future.delayed(const Duration(milliseconds: 20),
                 () => FocusScope.of(context).requestFocus(myFocusNode))
@@ -178,7 +156,7 @@ class _ProductState extends State<Product> {
                                         ScrollViewKeyboardDismissBehavior
                                             .onDrag,
                                     child: TextField(
-                                      controller: myController,
+                                      controller: myNameController,
                                       minLines: 1,
                                       maxLines: 3,
                                       maxLength: 45,
@@ -195,8 +173,9 @@ class _ProductState extends State<Product> {
                                         border: InputBorder.none,
                                         counterText: "",
                                       ),
-                                      onChanged: (text) => widget.updateFunc(
-                                          widget.valueInList, text, myQuantityController.text, expireDate),
+                                      onChanged: (text) => {
+                                        widget.product.setName = text,
+                                        widget.updateFunc(widget.product)},
                                     )))),
                       ],
                     ),
@@ -225,43 +204,46 @@ class _ProductState extends State<Product> {
                                       border: InputBorder.none,
                                       counterText: "",
                                     ),
-                                    onChanged: (text) => widget.updateFunc(
-                                        widget.valueInList, myController.text, text, expireDate),
+                                    onChanged: (text) => {
+                                      widget.product.setQuantity = text,
+                                      widget.updateFunc(widget.product)},
                                   )))),
+                    ]),
+                    Row(children: [
                       const SizedBox(
-                          width: 40,
+                          width: 60,
                           child: Icon(Icons.schedule,
                               size: 40, color: Colors.blue)),
-                      Text('${expireDate.day}/${expireDate.month}/${expireDate.year}',
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 22,
-                      )),
+                      const Text("Expiring date: ",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          )),
                       ElevatedButton(
                           style: ButtonStyle(
-                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(18.0),
-                                      side: const BorderSide(color: Colors.red)
-                                  )
-                              )
-                          ),
+                                      side: const BorderSide(
+                                          color: Colors.red)))),
                           onPressed: () async {
                             DateTime? newDate = await showDatePicker(
                                 context: context,
-                                initialDate: expireDate,
+                                initialDate: widget.product.getExpireDate,
                                 firstDate: DateTime(
-                                    min(DateTime.now().year, expireDate.year)),
+                                    min(DateTime.now().year, widget.product.getExpireDate.year)),
                                 lastDate: DateTime(DateTime.now().year + 5,
                                     DateTime.now().month, DateTime.now().day));
 
                             if (newDate != null) {
-                              setState(() => {expireDate = newDate});
-                              widget.updateFunc(widget.valueInList, myController.text, myQuantityController.text, expireDate);
+                              setState(() => {widget.product.setExpireDate = newDate});
+                              widget.updateFunc(widget.product);
                             }
                           },
-                          child: const Text("PICK")),
+                          child: Text(
+                              '${widget.product.getExpireDate.day}/${widget.product.getExpireDate.month}/${widget.product.getExpireDate.year}'))
                     ])
                   ])),
             )));
