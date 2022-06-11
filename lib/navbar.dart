@@ -54,7 +54,7 @@ class _MyHomePageState extends State<MyNavBar> {
 
   void onTap(int index){
     setState((){ currentIndex = index; });
-   // pageController.animateToPage(index, duration: Duration(milliseconds: 100), curve: Curves.bounceIn);
+    pageController.animateToPage(index, duration: Duration(milliseconds: 100), curve: Curves.bounceIn);
   }
 
   final screens = [
