@@ -3,7 +3,7 @@ class ProductItem {
   late int id;
   late bool focus;
   String name;
-  double quantity;
+  String quantity;
   DateTime expires;
 
   ProductItem(this.name, this.quantity, this.expires, {this.focus = true}){
@@ -22,7 +22,7 @@ class ProductItem {
   String get getName{
     return name;
   }
-  double get getQuantity{
+  String get getQuantity{
     return quantity;
   }
   DateTime get getExpireDate{
@@ -31,7 +31,7 @@ class ProductItem {
   set setName(String name){
     this.name = name;
   }
-  set setQuantity(double quantity){
+  set setQuantity(String quantity){
     this.quantity = quantity;
   }
   set setExpireDate(DateTime expires){
