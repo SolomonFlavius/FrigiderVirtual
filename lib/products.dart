@@ -12,11 +12,13 @@ class MyProductsPage extends StatefulWidget {
 
 class _MyProductsPageState extends State<MyProductsPage> {
   int maximum = 0;
-  List<Product> products = <Product>[];
+  final List<Product> products = <Product>[];
 
   deleteFromList(int index) {
     setState(() =>
-        {products.removeWhere((element) => element.getValueInList == index)});
+        {
+          products.removeWhere((element) => element.getValueInList == index),
+        });
   }
 
   @override
@@ -34,8 +36,11 @@ class _MyProductsPageState extends State<MyProductsPage> {
               Color(0xcc5ac18e),
               Color(0xff5ac18e),
             ])),
-        child: Column(
-          children: products,
+        child: ListView.builder(
+          itemCount: products.length,
+          itemBuilder: (context, index) {
+            return products[index];
+          },
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -57,7 +62,7 @@ class _MyProductsPageState extends State<MyProductsPage> {
 }
 
 class Product extends StatefulWidget {
-  Product(
+  const Product(
       {Key? key,
       required this.productName,
       required this.focusOnInit,
@@ -65,10 +70,10 @@ class Product extends StatefulWidget {
       required this.deleteFunc})
       : super(key: key);
 
-  String productName;
-  bool focusOnInit;
-  int valueInList;
-  Function deleteFunc;
+  final String productName;
+  final bool focusOnInit;
+  final int valueInList;
+  final Function deleteFunc;
 
   int get getValueInList {
     return valueInList;
@@ -83,10 +88,12 @@ class Product extends StatefulWidget {
 class _ProductState extends State<Product> {
   bool changeName = false;
   FocusNode myFocusNode = FocusNode();
+  final myController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
+    myController.text = widget.productName;
     if (widget.focusOnInit == true) {
       setState(() => {
             changeName = true,
@@ -123,8 +130,8 @@ class _ProductState extends State<Product> {
                           SingleChildScrollView(
                               keyboardDismissBehavior:
                                   ScrollViewKeyboardDismissBehavior.onDrag,
-                              child: TextFormField(
-                                  initialValue: widget.productName,
+                              child: TextField(
+                                  controller: myController,
                                   minLines: 1,
                                   maxLines: 3,
                                   maxLength: 45,
