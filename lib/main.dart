@@ -2,7 +2,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:frigider_virtual/settings/notification_management.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:frigider_virtual/navbar.dart';
+import 'package:frigider_virtual/products.dart';
 import 'package:frigider_virtual/auth.dart';
+import 'package:frigider_virtual/register.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+
 
 
 Future<void> main() async {
@@ -21,8 +28,19 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home:
-          Auth(), //Se schimba Auth cu MyProductsPage sau altcv pentru a testa pagina
+      home: StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot){
+          if(snapshot.hasData)
+          {
+            return MyNavBar(title: '');
+          }
+          else
+          {
+            return Auth();
+          }
+        },
+      )
     );
   }
 }
