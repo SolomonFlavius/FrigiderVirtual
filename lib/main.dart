@@ -4,15 +4,11 @@ import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:frigider_virtual/auth.dart';
 
-void main() async {
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
-      .then(
-    (value) => {
-      runApp(const MyApp()),
-      NotificationManagement().configure(),
-    },
-  );
+  await Firebase.initializeApp();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

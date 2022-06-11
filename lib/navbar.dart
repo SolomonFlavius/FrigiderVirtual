@@ -60,7 +60,7 @@ class _MyHomePageState extends State<MyNavBar> {
     // ProfilePage(),
     Container(color: Colors.white),
     Container(color: Colors.grey),
-    MarketPage(),
+    MarketPage(title: "Market",),
     // Container(color: Colors.blueGrey),
     Container(color: Colors.white10)
   ];
