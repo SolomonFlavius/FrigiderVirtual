@@ -239,7 +239,7 @@ class _AuthState extends State<Auth> {
                       buildEmail(),
                       SizedBox(height: 20),
                       buildPassword(),
-                      buildForgotPasswordButton(),
+                      //buildForgotPasswordButton(),
                       //BuildRemember(),
                       buildLogin(),
                       buildSignUp(),
@@ -255,13 +255,13 @@ class _AuthState extends State<Auth> {
   Future SignIn() async{
     try{
     await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
-    Navigator.push(
+    /*Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => MyNavBar(
                   title: '',
                 )),
-      );
+      );*/
     } on FirebaseAuthException catch(e)
     {
       showDialog(
