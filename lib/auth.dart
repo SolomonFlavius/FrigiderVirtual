@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:frigider_virtual/navbar.dart';
 import 'package:frigider_virtual/register.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:frigider_virtual/services/users_service.dart';
+import 'package:frigider_virtual/settings/notification_management.dart';
 
 class Auth extends StatefulWidget {
   @override
@@ -11,7 +13,6 @@ class Auth extends StatefulWidget {
 }
 
 class _AuthState extends State<Auth> {
-
   //variabile
   String email = '';
   String password = '';
@@ -48,12 +49,12 @@ class _AuthState extends State<Auth> {
                 prefixIcon: Icon(Icons.email, color: Color(0xffac18e)),
                 hintText: 'Email',
                 hintStyle: TextStyle(color: Colors.black38)),
-                onChanged: (value) => setState(() {
-                  email = value;
-                  emailValid = RegExp(
+            onChanged: (value) => setState(() {
+              email = value;
+              emailValid = RegExp(
                       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                   .hasMatch(email);
-                }),
+            }),
           ),
         )
       ],
@@ -89,10 +90,10 @@ class _AuthState extends State<Auth> {
                 prefixIcon: Icon(Icons.lock, color: Color(0xffac18e)),
                 hintText: 'Password',
                 hintStyle: TextStyle(color: Colors.black38)),
-                onChanged: (value) => setState(() {
-                  password = value;
-                  passwordValid = password.length >= 8;
-                }),
+            onChanged: (value) => setState(() {
+              password = value;
+              passwordValid = password.length >= 8;
+            }),
           ),
         )
       ],
@@ -143,15 +144,10 @@ class _AuthState extends State<Auth> {
       width: double.infinity,
       child: RaisedButton(
         elevation: 5,
-        onPressed: () 
-        {
-          if(emailValid && passwordValid)
-          {
+        onPressed: () {
+          if (emailValid && passwordValid) {
             SignIn();
-            
-          }
-          else
-          {
+          } else {
             showDialog(
                 context: context,
                 builder: (_) => AlertDialog(
@@ -176,12 +172,10 @@ class _AuthState extends State<Auth> {
 
   Widget buildSignUp() {
     return GestureDetector(
-      onTap: () 
-      {
+      onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(
-              builder: (context) => Register()),
+          MaterialPageRoute(builder: (context) => Register()),
         );
       },
       child: RichText(
@@ -202,7 +196,6 @@ class _AuthState extends State<Auth> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         body: AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
@@ -223,47 +216,52 @@ class _AuthState extends State<Auth> {
                       Color(0xff5ac18e),
                     ])),
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 25, vertical: 60),
-                  child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'Sign In',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 40,
-                            fontWeight: FontWeight.bold),
+                    padding: EdgeInsets.symmetric(horizontal: 25, vertical: 60),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            'Sign In',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 40,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(height: 30),
+                          buildEmail(),
+                          SizedBox(height: 20),
+                          buildPassword(),
+                          //buildForgotPasswordButton(),
+                          //BuildRemember(),
+                          buildLogin(),
+                          buildSignUp(),
+                        ],
                       ),
-                      SizedBox(height: 30),
-                      buildEmail(),
-                      SizedBox(height: 20),
-                      buildPassword(),
-                      //buildForgotPasswordButton(),
-                      //BuildRemember(),
-                      buildLogin(),
-                      buildSignUp(),
-                    ],
-                  ),
-                )))
+                    )))
           ],
         ),
       ),
     ));
   }
-  
-  Future SignIn() async{
-    try{
-    await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
-    /*Navigator.push(
+
+  Future SignIn() async {
+    try {
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+
+      // update the fcm token for the current user
+      var fcmToken = await NotificationManagement().getFCMToken();
+      await UsersService.updateUserFcmToken(email, fcmToken);
+
+      /*Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => MyNavBar(
                   title: '',
                 )),
       );*/
-    } on FirebaseAuthException catch(e)
-    {
+    } on FirebaseAuthException catch (e) {
       showDialog(
           context: context,
           builder: (_) => AlertDialog(
@@ -272,5 +270,4 @@ class _AuthState extends State<Auth> {
               ));
     }
   }
-
 }
