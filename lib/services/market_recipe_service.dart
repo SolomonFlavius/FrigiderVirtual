@@ -17,4 +17,18 @@ class MarketRecipeService {
       }
     });
   }
+
+  static Future<MarketRecipe?> getMarketRecipeByUserId(String id) async {
+    return _market_recipes.where('created_by', isEqualTo: id).get().then((value) {
+
+      var marketRecipeMap = value.docs[0].data();
+      marketRecipeMap['id'] = value.docs[0].id;
+      return Future<MarketRecipe?>.value(MarketRecipe.fromMap(marketRecipeMap));
+    }).catchError((error) {
+      if (kDebugMode) {
+        print('Error while getting market recipe by user id: $error');
+      }
+      return Future<MarketRecipe?>.value(null);
+    });
+  }
 }

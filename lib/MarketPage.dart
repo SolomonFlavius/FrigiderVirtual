@@ -1,5 +1,10 @@
+import 'dart:ffi';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:frigider_virtual/services/users_service.dart';
+import 'models/ingredient.dart';
+import 'package:frigider_virtual/models/market_recipe.dart' as MarketRecipeDB;
 
 class MarketPage extends StatefulWidget{
   const MarketPage({Key? key, required this.title}) : super(key: key);
@@ -7,43 +12,24 @@ class MarketPage extends StatefulWidget{
   final String title;
 
   @override
-  State<StatefulWidget> createState() {
-    return _MarketPageState();
-  }
+  _MarketPageState createState() => _MarketPageState();
 }
 
 class _MarketPageState extends State<MarketPage>{
 
-  final Stream<QuerySnapshot> recipes = FirebaseFirestore.instance.collection('market_recipes').snapshots();
+  String name = '';
+  String preparationTime = '';
+  double overallRating = 0;
+  int totalRatings = 0;
+  String description = '';
+  late List<Ingredient> ingredients;
+
+  late MarketRecipeDB.MarketRecipe marketRecipe;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body:
-      Container(
-        child: StreamBuilder<QuerySnapshot>(
-            // stream: market_recipes,
-            builder: (BuildContext context,
-            AsyncSnapshot<QuerySnapshot> snapshot,
-        ){
-            if(snapshot.hasError){
-              return Text("Snapshot Error");
-            }
-            if(snapshot.connectionState == ConnectionState.waiting){
-              return Text("Loading");
-            }
 
-            final data = snapshot.requireData;
-
-            return ListView.builder(
-              itemCount: data.size,
-              itemBuilder: (context, index){
-                return Text("data");
-              },
-            );
-      },
-      ),
-      ),
-    );
   }
+
+
 }

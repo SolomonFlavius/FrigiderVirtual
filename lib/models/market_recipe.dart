@@ -6,12 +6,12 @@ class MarketRecipe {
   String? id;
   String name;
   String preparationTime;
-  Double overallRating;
+  double overallRating;
   int totalRatings;
   String description;
   Timestamp? createdAt;
   Timestamp? updatedAt;
-  Timestamp? createdBy;
+  String? createdBy;
   List<Ingredient> ingredients;
 
   MarketRecipe(
@@ -32,13 +32,13 @@ class MarketRecipe {
       map!['id'] as String?,
       map['name'] as String,
       map['preparation_time'] as String,
-      map['overall_rating'] as Double,
+      map['overall_rating'] as double,
       map['total_ratings'] as int,
       map['description'] as String,
       map['ingredients'] as List<Ingredient>,
       createdAt: map['created_at'] as Timestamp?,
       updatedAt: map['updated_at'] as Timestamp?,
-      createdBy: map['created_by'] as Timestamp?,
+      createdBy: map['created_by'] as String?,
     );
   }
 
