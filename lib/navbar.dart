@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:frigider_virtual/products.dart';
 import 'package:frigider_virtual/profile.dart';
 import 'MyIcons.dart';
 import 'MarketPage.dart';
@@ -62,7 +63,8 @@ class _MyHomePageState extends State<MyNavBar> {
     // RecipesPage(),
 
     // ProfilePage(),
-    Container(color: Colors.white),
+    //Container(color: Colors.white),
+    MyProductsPage(),
     Container(color: Colors.grey),
     MarketPage(),
     // Container(color: Colors.blueGrey),
