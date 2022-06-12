@@ -70,4 +70,5 @@ class MarketRecipe {
       'created_by': createdBy,
     };
   }
+
 }
