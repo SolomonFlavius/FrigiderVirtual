@@ -14,8 +14,20 @@ class MyProductsPage extends StatefulWidget {
 }
 
 class _MyProductsPageState extends State<MyProductsPage> {
-  final List<ProductItem> products = <ProductItem>[];
+  late List<ProductItem> products = <ProductItem>[];
   final ProductsService _productsService = ProductsService();
+
+  @override
+  initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      setState(() {getProducts();});
+    });
+  }
+
+  getProducts() async {
+    products = await _productsService.getProducts();
+  }
 
   updateList(ProductItem modifiedProduct) {
     for (var element in products) {
