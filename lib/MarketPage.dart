@@ -26,7 +26,21 @@ class _MarketPageState extends State<MarketPage>{
             builder: (BuildContext context,
             AsyncSnapshot<QuerySnapshot> snapshot,
         ){
+            if(snapshot.hasError){
+              return Text("Snapshot Error");
+            }
+            if(snapshot.connectionState == ConnectionState.waiting){
+              return Text("Loading");
+            }
 
+            final data = snapshot.requireData;
+
+            return ListView.builder(
+              itemCount: data.size,
+              itemBuilder: (context, index){
+                return Text("data");
+              },
+            )
       },
       ),
       ),
