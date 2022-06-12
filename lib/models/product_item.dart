@@ -1,6 +1,5 @@
 class ProductItem {
-  static int nextId = 0;
-  late int id;
+  late String id;
   late bool focus;
   String name;
   String description;
@@ -16,8 +15,7 @@ class ProductItem {
   ProductItem(this.name, this.description, String quantity, this.measurement,
       String amount, this.category, this.expires, this.purchased,
       {this.focus = true, this.isExpanded = true}) {
-    id = nextId;
-    nextId++;
+    id = "";
     this.quantity = double.parse(quantity);
     if (amount.compareTo("") == 0) {
       this.amount = 1;
@@ -28,7 +26,7 @@ class ProductItem {
     }
   }
 
-  int get getId {
+  String get getId {
     return id;
   }
 
@@ -76,6 +74,10 @@ class ProductItem {
 
   bool get getIsExpanded {
     return isExpanded;
+  }
+
+  set setId(String id){
+    this.id = id;
   }
 
   set setName(String name) {
