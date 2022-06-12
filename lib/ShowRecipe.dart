@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/rendering.dart';
+
 import 'main.dart';
 import 'package:frigider_virtual/AddRecipeForm.dart';
 
 import '../models/recipe.dart';
 import '../services/recipe_service.dart';
 
-RecipesService recipesService = RecipesService();
+int iterator = 0;
 
 class ShowRecipes extends StatelessWidget {
   @override
@@ -80,7 +81,9 @@ class _ShowRecipes extends StatelessWidget {
         child: Container(
           child: ElevatedButton(
             child: const Icon(Icons.arrow_circle_left),
-            onPressed: () {},
+            onPressed: () {
+              iterator -= 1;
+            },
           ),
         ),
       ),
@@ -90,7 +93,11 @@ class _ShowRecipes extends StatelessWidget {
         child: Container(
           child: ElevatedButton(
             child: const Icon(Icons.arrow_circle_right),
-            onPressed: () {},
+            onPressed: () {
+              iterator += 1;
+              if (iterator >= recipe.length) iterator -= 1;
+              MaterialPageRoute(builder: (context) => ShowRecipes());
+            },
           ),
         ),
       ),

@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/rendering.dart';
 import 'dart:collection';
+import 'package:intl/intl.dart';
 
 import 'main.dart';
 import 'ShowRecipe.dart';
@@ -13,8 +14,12 @@ import '../services/recipe_service.dart';
 final Map<String, List<String>> products = {};
 final Map<String, List<int>> quantities = {};
 List<String> recipes = [];
+List<String> description = [];
 List<String> product = [];
+List<int> preparationTime = [];
 List<int> quantity = [];
+
+List<Recipe> recipe = [];
 
 class AddRecipe extends StatelessWidget {
   @override
@@ -43,6 +48,8 @@ class _AddRecepieForm1 extends State<AddRecipeForm> {
   final recipeController = TextEditingController();
   final productController = TextEditingController();
   final quantityController = TextEditingController();
+  final descriptionController = TextEditingController();
+  final preparationTimeController = TextEditingController();
 
   void disposeRecepie() {
     // Clean up the controller when the widget is disposed.
@@ -75,6 +82,26 @@ class _AddRecepieForm1 extends State<AddRecipeForm> {
     quantity = [];
   }
 
+  void createRecipe() {
+    List<Ingredients> ingredients = [];
+    for (int i = 0; i < product.length; i++) {
+      Ingredients ing = Ingredients();
+      ing.setName = product[i];
+      ing.setQuantity = quantity[i];
+      ing.setQuantityMeasuree = "gram";
+      ingredients.add(ing);
+    }
+    Recipe rep = Recipe(
+        recipes.last,
+        description.last,
+        preparationTime.last,
+        Timestamp.fromDate(DateTime.now()),
+        Timestamp.fromDate(DateTime.now()),
+        ingredients);
+    recipe.add(rep);
+    print("Am adaugta cacatul asta");
+  }
+
   void printProduct() {
     print("Product: " + productController.text);
     print("Quantity: " + quantityController.text);
@@ -105,9 +132,13 @@ class _AddRecepieForm1 extends State<AddRecipeForm> {
             child: ElevatedButton(
               onPressed: () {
                 recipes.add(recipeController.text);
+                description.add(descriptionController.text);
+                int prep = int.parse(preparationTimeController.text);
+                preparationTime.add(prep);
                 products[recipes.last] = product;
                 quantities[recipes.last] = quantity;
                 print(products);
+                createRecipe();
                 clearRecepie();
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const MyApp()));
@@ -135,6 +166,37 @@ class _AddRecepieForm1 extends State<AddRecipeForm> {
             ),
           ),
         ),
+        Positioned(
+          top: 260,
+          left: 10,
+          width: 250,
+          child: Container(
+            // Enter product name
+            child: TextField(
+              controller: descriptionController,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Enter the description',
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+          top: 350,
+          left: 10,
+          width: 250,
+          child: Container(
+            // Enter product name
+            child: TextField(
+              controller: preparationTimeController,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Enter the preparation time',
+              ),
+            ),
+          ),
+        ),
+
         // Text to add gram of product
         Positioned(
           top: 120,

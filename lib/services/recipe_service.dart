@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
 import '../models/recipe.dart';
-
+/*
 class RecipesService {
   static final _recipes = FirebaseFirestore.instance.collection('recipes');
 
@@ -37,3 +37,4 @@ class RecipesService {
     });
   }
 }
+*/
