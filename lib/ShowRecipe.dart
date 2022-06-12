@@ -5,6 +5,11 @@ import 'package:flutter/rendering.dart';
 import 'main.dart';
 import 'package:frigider_virtual/AddRecipeForm.dart';
 
+import '../models/recipe.dart';
+import '../services/recipe_service.dart';
+
+RecipesService recipesService = RecipesService();
+
 class ShowRecipes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -67,7 +72,26 @@ class _ShowRecipes extends StatelessWidget {
         right: 150,
         child: Container(
           color: Colors.grey,
-          child: Text("Mamaliga\n Oua 10g\n Faina 20g"),
+        ),
+      ),
+      Positioned(
+        top: 350,
+        right: 300,
+        child: Container(
+          child: ElevatedButton(
+            child: const Icon(Icons.arrow_circle_left),
+            onPressed: () {},
+          ),
+        ),
+      ),
+      Positioned(
+        top: 350,
+        left: 300,
+        child: Container(
+          child: ElevatedButton(
+            child: const Icon(Icons.arrow_circle_right),
+            onPressed: () {},
+          ),
         ),
       ),
     ]);
