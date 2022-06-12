@@ -113,6 +113,21 @@ class _ProductState extends State<Product> {
   final myQuantityController = TextEditingController();
   final myAmountController = TextEditingController();
   var measurement = ['-', 'g', 'kg', 'ml', 'l'];
+  var categories = [
+    "Dairy",
+    "Vegetables",
+    "Snacks",
+    "Fruits",
+    "Bakery",
+    "Meat",
+    "Pasta",
+    "Fish",
+    "Condiments",
+    "Frozen foods",
+    "Beverages",
+    "Canned goods",
+    "Other"
+  ];
 
   @override
   void initState() {
