@@ -19,12 +19,6 @@ class UsersService {
   }
 
   static Future<void> updateUserFcmToken(String email, String? token) async {
-    if (token == null) {
-      if (kDebugMode) {
-        print('No token provided, skipping update');
-      }
-      return;
-    }
     final userId = await getUserId(email);
     return _users.doc(userId).update({'fcm_token': token}).then((value) {
       if (kDebugMode) {
