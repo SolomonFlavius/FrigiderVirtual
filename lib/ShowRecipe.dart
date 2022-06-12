@@ -21,7 +21,6 @@ class ShowRecipes extends StatelessWidget {
   }
 }
 
-// First Page
 class _ShowRecipes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -61,6 +60,14 @@ class _ShowRecipes extends StatelessWidget {
             child: const Icon(Icons.soup_kitchen_outlined),
             onPressed: () {},
           ),
+        ),
+      ),
+      Positioned(
+        top: 250,
+        right: 150,
+        child: Container(
+          color: Colors.grey,
+          child: Text("Mamaliga\n Oua 10g\n Faina 20g"),
         ),
       ),
     ]);
