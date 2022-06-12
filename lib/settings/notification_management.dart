@@ -116,7 +116,7 @@ class NotificationManagement {
         });
   }
 
-  Future<String?> getFcmToken() async {
+  Future<String?> getFCMToken() async {
     return await FirebaseMessaging.instance.getToken();
   }
 }
