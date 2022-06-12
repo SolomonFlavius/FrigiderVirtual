@@ -59,32 +59,38 @@ class _MyProductsPageState extends State<MyProductsPage> {
                               fontWeight: FontWeight.bold,
                               color: Colors.white60))),
                   Product(
-                      product: ProductItem("Banane", "", "1", "-", "",
-                          DateTime.now(), DateTime.now(),
+                      product: ProductItem("Banane", "", "100", "-", "",
+                          "Other", DateTime.now(), DateTime.now(),
                           focus: false),
                       updateFunc: updateList),
                   Expanded(
                       child: ListView.builder(
-                          itemCount: products.length,
-                          itemBuilder: (context, index) => Dismissible(
-                              key: ValueKey(products[index].getId),
-                              background: Container(
-                                  color: Colors.red,
-                                  child: const Icon(Icons.delete_forever,
-                                      size: 100)),
-                              onDismissed: (direction) {
-                                setState(() => {products.removeAt(index)});
-                              },
-                              child: Product(
-                                product: products[index],
-                                updateFunc: updateList,
-                              ))))
+                          itemCount: products.length + 1,
+                          itemBuilder: (context, index) {
+                            if (index < products.length) {
+                              return Dismissible(
+                                  key: ValueKey(products[index].getId),
+                                  background: Container(
+                                      color: Colors.red,
+                                      child: const Icon(Icons.delete_forever,
+                                          size: 100)),
+                                  onDismissed: (direction) {
+                                    setState(() => {products.removeAt(index)});
+                                  },
+                                  child: Product(
+                                    product: products[index],
+                                    updateFunc: updateList,
+                                  ));
+                            } else {
+                              return const SizedBox(height: 150);
+                            }
+                          }))
                 ]),
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
-              setState(() => products.add(ProductItem(
-                  "", "", "1", "-", "", DateTime.now(), DateTime.now())));
+              setState(() => products.add(ProductItem("", "", "100", "-", "",
+                  "Other", DateTime.now(), DateTime.now())));
             },
             backgroundColor: Colors.white,
             child: const Icon(Icons.add, color: Colors.black, size: 40),
@@ -114,6 +120,7 @@ class _ProductState extends State<Product> {
   final myAmountController = TextEditingController();
   var measurement = ['-', 'g', 'kg', 'ml', 'l'];
   var categories = [
+    "Other",
     "Dairy",
     "Vegetables",
     "Snacks",
@@ -125,8 +132,7 @@ class _ProductState extends State<Product> {
     "Condiments",
     "Frozen foods",
     "Beverages",
-    "Canned goods",
-    "Other"
+    "Canned goods"
   ];
 
   @override
@@ -338,6 +344,49 @@ class _ProductState extends State<Product> {
                                       widget.updateFunc(widget.product)
                                     },
                                   ))))
+                    ]),
+                    Row(children: [
+                      const SizedBox(
+                          width: 60,
+                          child: Icon(Icons.fastfood,
+                              size: 40, color: Colors.blue)),
+                      const Padding(
+                          padding: EdgeInsets.only(right: 8),
+                          child: Text("Category:",
+                              style: TextStyle(
+                                  fontSize: 22, fontWeight: FontWeight.bold))),
+                      Container(
+                          height: 40,
+                          decoration: BoxDecoration(
+                              border:
+                                  Border.all(width: 2.0, color: Colors.blue),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(20))),
+                          child: Padding(
+                              padding: const EdgeInsets.only(left: 8),
+                              child: DropdownButton(
+                                value: widget.product.getCategory,
+                                icon: const Icon(Icons.keyboard_arrow_down),
+                                items: categories.map((String item) {
+                                  return DropdownMenuItem(
+                                    value: item,
+                                    child: Text(
+                                      item,
+                                      style: const TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  );
+                                }).toList(),
+                                onChanged: (String? newValue) {
+                                  if (newValue != null) {
+                                    setState(() => {
+                                          widget.product.setCategory = newValue,
+                                          widget.updateFunc(widget.product)
+                                        });
+                                  }
+                                },
+                              ))),
                     ]),
                     Row(children: [
                       const SizedBox(

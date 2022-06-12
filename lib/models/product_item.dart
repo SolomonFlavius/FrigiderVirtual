@@ -8,11 +8,12 @@ class ProductItem {
   String measurement;
   late double amount;
   late bool showAmount;
+  String category;
   DateTime expires;
   DateTime purchased;
 
   ProductItem(this.name, this.description, String quantity, this.measurement,
-      String amount, this.expires, this.purchased,
+      String amount, this.category, this.expires, this.purchased,
       {this.focus = true}) {
     id = nextId;
     nextId++;
@@ -60,6 +61,10 @@ class ProductItem {
     }
   }
 
+  String get getCategory{
+    return category;
+  }
+
   DateTime get getExpireDate {
     return expires;
   }
@@ -92,6 +97,10 @@ class ProductItem {
       this.amount = double.parse(amount);
       showAmount = true;
     }
+  }
+
+  set setCategory(String category) {
+    this.category = category;
   }
 
   set setExpireDate(DateTime expires) {
