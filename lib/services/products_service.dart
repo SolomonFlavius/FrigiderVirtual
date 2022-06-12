@@ -4,7 +4,6 @@ import 'package:frigider_virtual/models/product_item.dart';
 import 'package:frigider_virtual/services/users_service.dart';
 
 class ProductsService {
-
   late CollectionReference<Map<String, dynamic>>? db;
 
   ProductsService() {
@@ -22,7 +21,10 @@ class ProductsService {
     }
 
     String userId = await UsersService.getUserId(userEmail);
-    db = FirebaseFirestore.instance.collection('users').doc(userId).collection('products');
+    db = FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .collection('products');
   }
 
   Future<String> addProduct(ProductItem item) async {
@@ -34,7 +36,8 @@ class ProductsService {
       'expiration_date': item.getExpireDate.millisecondsSinceEpoch,
       'quantity': num.parse(item.getQuantity),
       'quantity_measure': item.getMeasurement,
-      'number_of_products': num.parse(item.getAmount == "" ? "1" : item.getAmount)
+      'number_of_products':
+          num.parse(item.getAmount == "" ? "1" : item.getAmount)
     });
     return doc.id;
   }
@@ -48,11 +51,37 @@ class ProductsService {
       'expiration_date': item.getExpireDate.millisecondsSinceEpoch,
       'quantity': num.parse(item.getQuantity),
       'quantity_measure': item.getMeasurement,
-      'number_of_products': num.parse(item.getAmount == "" ? "1" : item.getAmount)
+      'number_of_products':
+          num.parse(item.getAmount == "" ? "1" : item.getAmount)
     });
   }
 
   Future deleteProduct(ProductItem item) async {
     await db!.doc(item.id).delete();
+  }
+
+  Future<List<ProductItem>> getProducts() async {
+    return await Future.delayed(const Duration(milliseconds: 40), () {
+      return db!.get().then((values) {
+        List<ProductItem> products = <ProductItem>[];
+        for (var value in values.docs) {
+          var data = value.data();
+          products.add(ProductItem(
+            data['name'],
+            data['description'],
+            data['quantity'].toString(),
+            data['quantity_measure'],
+            data['number_of_products'].toString(),
+            data['category'],
+            DateTime.fromMillisecondsSinceEpoch(data['expiration_date']),
+            DateTime.fromMillisecondsSinceEpoch(data['purchase_date']),
+            isExpanded: false,
+            focus: false,
+          ));
+          products.last.setId = value.id;
+        }
+        return products;
+      });
+    });
   }
 }
