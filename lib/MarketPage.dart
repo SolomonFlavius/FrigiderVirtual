@@ -22,7 +22,7 @@ class _MarketPageState extends State<MarketPage>{
       body:
       Container(
         child: StreamBuilder<QuerySnapshot>(
-            stream: market_recipes,
+            // stream: market_recipes,
             builder: (BuildContext context,
             AsyncSnapshot<QuerySnapshot> snapshot,
         ){
@@ -40,7 +40,7 @@ class _MarketPageState extends State<MarketPage>{
               itemBuilder: (context, index){
                 return Text("data");
               },
-            )
+            );
       },
       ),
       ),
