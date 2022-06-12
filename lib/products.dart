@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:frigider_virtual/models/product_item.dart';
+import 'package:frigider_virtual/services/products_service.dart';
 
 class MyProductsPage extends StatefulWidget {
   const MyProductsPage({Key? key}) : super(key: key);
@@ -14,6 +15,7 @@ class MyProductsPage extends StatefulWidget {
 
 class _MyProductsPageState extends State<MyProductsPage> {
   final List<ProductItem> products = <ProductItem>[];
+  final ProductsService _productsService = ProductsService();
 
   updateList(ProductItem modifiedProduct) {
     for (var element in products) {
