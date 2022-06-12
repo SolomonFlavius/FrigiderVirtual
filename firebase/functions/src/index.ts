@@ -4,11 +4,15 @@ import * as admin from "firebase-admin";
 admin.initializeApp();
 
 exports.sendAlertForProductsSoonToExpire = functions.pubsub.schedule("0 6 * * *")
+  .retryConfig({ retryCount: 3, })
   .timeZone("Europe/Bucharest")
   .onRun((context) => {
     admin.firestore().collection("users").get()
       .then(users => {
         users.forEach(user => { // for each user check if they have products expiring soon
+          if (!user.data().fcm_token) { // if the user isn't logged in on any device
+            return;
+          }
           const products_exp: String[] = []; // save the products names that are expiring soon
           const now_date: Date = new Date(); // get the current date
 
@@ -42,11 +46,15 @@ exports.sendAlertForProductsSoonToExpire = functions.pubsub.schedule("0 6 * * *"
   });
 
 exports.sendAlertForProductsExpired = functions.pubsub.schedule("0 6 * * *")
+  .retryConfig({ retryCount: 3, })
   .timeZone("Europe/Bucharest")
   .onRun((context) => {
     admin.firestore().collection("users").get()
       .then(users => {
         users.forEach(user => { // for each user check if they have products expiring soon
+          if (!user.data().fcm_token) { // if the user isn't logged in on any device
+            return;
+          }
           const products_exp: String[] = []; // save the products names that are expiring soon
           const now_date: Date = new Date(); // get the current date
 
