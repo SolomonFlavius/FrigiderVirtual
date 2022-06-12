@@ -3,38 +3,102 @@ class ProductItem {
   late int id;
   late bool focus;
   String name;
-  String quantity;
+  String description;
+  late double quantity;
+  String measurement;
+  late double amount;
+  late bool showAmount;
   DateTime expires;
+  DateTime purchased;
 
-  ProductItem(this.name, this.quantity, this.expires, {this.focus = true}){
+  ProductItem(this.name, this.description, String quantity, this.measurement,
+      String amount, this.expires, this.purchased,
+      {this.focus = true}) {
     id = nextId;
     nextId++;
+    this.quantity = double.parse(quantity);
+    if (amount.compareTo("") == 0) {
+      this.amount = 1;
+      showAmount = false;
+    } else {
+      this.amount = double.parse(amount);
+      showAmount = true;
+    }
   }
 
-  int get getId{
+  int get getId {
     return id;
   }
-  bool get getFocus{
+
+  bool get getFocus {
     bool lastFocus = focus;
     focus = false;
     return lastFocus;
   }
-  String get getName{
+
+  String get getName {
     return name;
   }
-  String get getQuantity{
-    return quantity;
+
+  String get getDescription {
+    return description;
   }
-  DateTime get getExpireDate{
+
+  String get getQuantity {
+    return quantity.toString();
+  }
+
+  String get getMeasurement {
+    return measurement;
+  }
+
+  String get getAmount {
+    if(showAmount == true) {
+      return amount.toString();
+    } else {
+      return "";
+    }
+  }
+
+  DateTime get getExpireDate {
     return expires;
   }
-  set setName(String name){
+
+  DateTime get getPurchaseDate {
+    return purchased;
+  }
+
+  set setName(String name) {
     this.name = name;
   }
-  set setQuantity(String quantity){
-    this.quantity = quantity;
+
+  set setDescription(String description) {
+    this.description = description;
   }
-  set setExpireDate(DateTime expires){
+
+  set setQuantity(String quantity) {
+    this.quantity = double.parse(quantity);
+  }
+
+  set setMeasurement(String measurement) {
+    this.measurement = measurement;
+  }
+
+  set setAmount(String amount) {
+    if (amount.compareTo("") == 0) {
+      this.amount = 1;
+      showAmount = false;
+    } else {
+      this.amount = double.parse(amount);
+      showAmount = true;
+    }
+  }
+
+  set setExpireDate(DateTime expires) {
     this.expires = expires;
+  }
+
+  set setPurchaseDate(DateTime purchased) {
+    this.purchased = purchased;
   }
 }
