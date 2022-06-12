@@ -58,11 +58,11 @@ class _MyProductsPageState extends State<MyProductsPage> {
                               fontSize: 60,
                               fontWeight: FontWeight.bold,
                               color: Colors.white60))),
-                  Product(
-                      product: ProductItem("Banane", "", "100", "-", "",
-                          "Other", DateTime.now(), DateTime.now(),
-                          focus: false),
-                      updateFunc: updateList),
+                  // Product(
+                  //     product: ProductItem("Banane", "", "100", "-", "",
+                  //         "Other", DateTime.now(), DateTime.now(),
+                  //         focus: false),
+                  //     updateFunc: updateList),
                   Expanded(
                       child: ListView.builder(
                           itemCount: products.length + 1,
