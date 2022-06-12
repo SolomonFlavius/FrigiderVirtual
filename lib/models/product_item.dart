@@ -11,10 +11,11 @@ class ProductItem {
   String category;
   DateTime expires;
   DateTime purchased;
+  bool isExpanded;
 
   ProductItem(this.name, this.description, String quantity, this.measurement,
       String amount, this.category, this.expires, this.purchased,
-      {this.focus = true}) {
+      {this.focus = true, this.isExpanded = true}) {
     id = nextId;
     nextId++;
     this.quantity = double.parse(quantity);
@@ -73,6 +74,10 @@ class ProductItem {
     return purchased;
   }
 
+  bool get getIsExpanded {
+    return isExpanded;
+  }
+
   set setName(String name) {
     this.name = name;
   }
@@ -109,5 +114,9 @@ class ProductItem {
 
   set setPurchaseDate(DateTime purchased) {
     this.purchased = purchased;
+  }
+
+  set setIsExpanded(bool isExpanded) {
+    this.isExpanded = isExpanded;
   }
 }
