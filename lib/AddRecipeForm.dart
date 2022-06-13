@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'main.dart';
 import 'ShowRecipe.dart';
 
+
 import '../services/recipe_service.dart';
 import '../models/recipe.dart';
 import '../services/recipe_service.dart';
@@ -22,6 +23,8 @@ List<int?> quantity = [];
 
 List<Recipe> recipe = [];
 RecipesService recipeService = RecipesService();
+
+
 
 class AddRecipe extends StatelessWidget {
   @override
@@ -45,6 +48,7 @@ class _AddRecepieForm1 extends State<AddRecipeForm> {
   final recipeController = TextEditingController();
   final productController = TextEditingController();
   final quantityController = TextEditingController();
+
   final descriptionController = TextEditingController();
   final preparationTimeController = TextEditingController();
 
@@ -77,6 +81,7 @@ class _AddRecepieForm1 extends State<AddRecipeForm> {
     quantityController.clear();
     product = [];
     quantity = [];
+
   }
 
   void createRecipe() {
@@ -98,6 +103,7 @@ class _AddRecepieForm1 extends State<AddRecipeForm> {
     recipe.add(rep);
     recipeService.addRecipe(recipe.last);
     print("Am adaugta reteta");
+
   }
 
   void printProduct() {
@@ -130,6 +136,7 @@ class _AddRecepieForm1 extends State<AddRecipeForm> {
             child: ElevatedButton(
               onPressed: () {
                 recipes.add(recipeController.text);
+
                 description.add(descriptionController.text);
                 int prep = int.parse(preparationTimeController.text);
                 preparationTime.add(prep);
@@ -137,6 +144,7 @@ class _AddRecepieForm1 extends State<AddRecipeForm> {
                 quantities[recipes.last] = quantity;
                 print(products);
                 createRecipe();
+
                 clearRecepie();
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => ShowRecipes()));

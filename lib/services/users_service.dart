@@ -37,6 +37,7 @@ class UsersService {
     });
   }
 
+
   static Future<User?> getUserByEmail(String email) async {
     return _users.where('email', isEqualTo: email).get().then((value) {
       var userMap = value.docs[0].data();

@@ -9,6 +9,7 @@ import 'package:frigider_virtual/AddRecipeForm.dart';
 import '../models/recipe.dart';
 import '../services/recipe_service.dart';
 
+
 int iterator = 0;
 
 class ShowRecipes extends StatelessWidget {
@@ -76,9 +77,11 @@ class _ShowRecipes extends StatelessWidget {
         child: Container(
           child: ElevatedButton(
             child: const Icon(Icons.arrow_circle_left),
+
             onPressed: () {
               iterator -= 1;
             },
+
           ),
         ),
       ),

@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:frigider_virtual/models/product_item.dart';
 import 'package:frigider_virtual/services/products_service.dart';
@@ -21,12 +20,13 @@ class _MyProductsPageState extends State<MyProductsPage> {
   initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_){
-      setState(() {getProducts();});
-    });
+        getProducts();
+      });
   }
 
   getProducts() async {
     products = await _productsService.getProducts();
+    setState(() => {products});
   }
 
   updateList(ProductItem modifiedProduct) {
