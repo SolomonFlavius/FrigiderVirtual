@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:frigider_virtual/products.dart';
 import 'package:frigider_virtual/profile.dart';
 import 'MyIcons.dart';
 import 'MarketPage.dart';
@@ -23,19 +24,6 @@ Map<int, Color> color =
 };
 
 MaterialColor colorCustom = MaterialColor(0xff0e4d05, color);
-
-/*class MyApp extends StatelessWidget {
-  const MyApp ({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(primarySwatch: colorCustom),
-      home: const MyNavBar(title: 'Frigider virtual'),
-    );
-  }
-}*/
 
 class MyNavBar extends StatefulWidget {
   const MyNavBar({Key? key, required this.title}) : super(key: key);
@@ -66,7 +54,6 @@ class _MyHomePageState extends State<MyNavBar> {
     Container(color: Colors.white),
     // Container(color: Colors.grey),
     MarketPage(title: ''),
-
     Profile()
   ];
 
