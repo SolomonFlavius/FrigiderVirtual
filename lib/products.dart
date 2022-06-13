@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:frigider_virtual/models/product_item.dart';
+import 'package:frigider_virtual/services/products_service.dart';
 
 class MyProductsPage extends StatefulWidget {
   const MyProductsPage({Key? key}) : super(key: key);
@@ -13,12 +14,26 @@ class MyProductsPage extends StatefulWidget {
 }
 
 class _MyProductsPageState extends State<MyProductsPage> {
-  final List<ProductItem> products = <ProductItem>[];
+  late List<ProductItem> products = <ProductItem>[];
+  final ProductsService _productsService = ProductsService();
+
+  @override
+  initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      setState(() {getProducts();});
+    });
+  }
+
+  getProducts() async {
+    products = await _productsService.getProducts();
+  }
 
   updateList(ProductItem modifiedProduct) {
     for (var element in products) {
       if (element.getId == modifiedProduct.getId) {
         element = modifiedProduct;
+        _productsService.updateProduct(element);
         break;
       }
     }
@@ -42,11 +57,11 @@ class _MyProductsPageState extends State<MyProductsPage> {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      Color(0x665ac18e),
-                      Color(0x995ac18e),
-                      Color(0xcc5ac18e),
-                      Color(0xff5ac18e),
-                    ])),
+                  Color(0x665ac18e),
+                  Color(0x995ac18e),
+                  Color(0xcc5ac18e),
+                  Color(0xff5ac18e),
+                ])),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -75,6 +90,7 @@ class _MyProductsPageState extends State<MyProductsPage> {
                                       child: const Icon(Icons.delete_forever,
                                           size: 100)),
                                   onDismissed: (direction) {
+                                    _productsService.deleteProduct(products[index]);
                                     setState(() => {products.removeAt(index)});
                                   },
                                   child: Product(
@@ -88,9 +104,13 @@ class _MyProductsPageState extends State<MyProductsPage> {
                 ]),
           ),
           floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              setState(() => products.add(ProductItem("", "", "100", "-", "",
-                  "Other", DateTime.now(), DateTime.now())));
+            onPressed: () async {
+              setState(() {
+                products.add(ProductItem("", "", "100", "-", "", "Other",
+                    DateTime.now(), DateTime.now()));
+              });
+              String id = await _productsService.addProduct(products.last);
+              products.last.setId = id;
             },
             backgroundColor: Colors.white,
             child: const Icon(Icons.add, color: Colors.black, size: 40),
@@ -148,9 +168,9 @@ class _ProductState extends State<Product> {
     }
     if (widget.product.getFocus == true) {
       setState(() => {
-        Future.delayed(const Duration(milliseconds: 20),
+            Future.delayed(const Duration(milliseconds: 20),
                 () => FocusScope.of(context).requestFocus(myFocusNode))
-      });
+          });
     }
   }
 
@@ -183,8 +203,8 @@ class _ProductState extends State<Product> {
                                     padding: const EdgeInsets.only(left: 0.0),
                                     child: SingleChildScrollView(
                                         keyboardDismissBehavior:
-                                        ScrollViewKeyboardDismissBehavior
-                                            .onDrag,
+                                            ScrollViewKeyboardDismissBehavior
+                                                .onDrag,
                                         child: TextField(
                                           controller: myNameController,
                                           minLines: 1,
@@ -192,7 +212,7 @@ class _ProductState extends State<Product> {
                                           maxLength: 45,
                                           focusNode: myFocusNode,
                                           textAlignVertical:
-                                          TextAlignVertical.center,
+                                              TextAlignVertical.center,
                                           style: const TextStyle(
                                             color: Colors.black,
                                             fontWeight: FontWeight.bold,
@@ -224,19 +244,19 @@ class _ProductState extends State<Product> {
                                 Expanded(
                                     child: Padding(
                                         padding:
-                                        const EdgeInsets.only(left: 0.0),
+                                            const EdgeInsets.only(left: 0.0),
                                         child: SingleChildScrollView(
                                             keyboardDismissBehavior:
-                                            ScrollViewKeyboardDismissBehavior
-                                                .onDrag,
+                                                ScrollViewKeyboardDismissBehavior
+                                                    .onDrag,
                                             child: TextField(
                                               controller:
-                                              myDescriptionController,
+                                                  myDescriptionController,
                                               minLines: 1,
                                               maxLines: 5,
                                               maxLength: 100,
                                               textAlignVertical:
-                                              TextAlignVertical.center,
+                                                  TextAlignVertical.center,
                                               style: const TextStyle(
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.bold,
@@ -265,14 +285,14 @@ class _ProductState extends State<Product> {
                                   width: 70,
                                   child: SingleChildScrollView(
                                       keyboardDismissBehavior:
-                                      ScrollViewKeyboardDismissBehavior
-                                          .onDrag,
+                                          ScrollViewKeyboardDismissBehavior
+                                              .onDrag,
                                       child: TextField(
                                         controller: myQuantityController,
                                         keyboardType: TextInputType.number,
                                         minLines: 1,
                                         textAlignVertical:
-                                        TextAlignVertical.center,
+                                            TextAlignVertical.center,
                                         style: const TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
@@ -315,12 +335,12 @@ class _ProductState extends State<Product> {
                                         onChanged: (String? newValue) {
                                           if (newValue != null) {
                                             setState(() => {
-                                              widget.product
-                                                  .setMeasurement =
-                                                  newValue,
-                                              widget.updateFunc(
-                                                  widget.product)
-                                            });
+                                                  widget.product
+                                                          .setMeasurement =
+                                                      newValue,
+                                                  widget.updateFunc(
+                                                      widget.product)
+                                                });
                                           }
                                         },
                                       ))),
@@ -338,14 +358,14 @@ class _ProductState extends State<Product> {
                                       padding: const EdgeInsets.only(left: 0.0),
                                       child: SingleChildScrollView(
                                           keyboardDismissBehavior:
-                                          ScrollViewKeyboardDismissBehavior
-                                              .onDrag,
+                                              ScrollViewKeyboardDismissBehavior
+                                                  .onDrag,
                                           child: TextField(
                                             controller: myAmountController,
                                             keyboardType: TextInputType.number,
                                             minLines: 1,
                                             textAlignVertical:
-                                            TextAlignVertical.center,
+                                                TextAlignVertical.center,
                                             style: const TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold,
@@ -400,11 +420,11 @@ class _ProductState extends State<Product> {
                                         onChanged: (String? newValue) {
                                           if (newValue != null) {
                                             setState(() => {
-                                              widget.product.setCategory =
-                                                  newValue,
-                                              widget.updateFunc(
-                                                  widget.product)
-                                            });
+                                                  widget.product.setCategory =
+                                                      newValue,
+                                                  widget.updateFunc(
+                                                      widget.product)
+                                                });
                                           }
                                         },
                                       ))),
@@ -423,17 +443,17 @@ class _ProductState extends State<Product> {
                               ElevatedButton(
                                   style: ButtonStyle(
                                       shape: MaterialStateProperty.all<
-                                          RoundedRectangleBorder>(
+                                              RoundedRectangleBorder>(
                                           RoundedRectangleBorder(
                                               borderRadius:
-                                              BorderRadius.circular(18.0),
+                                                  BorderRadius.circular(18.0),
                                               side: const BorderSide(
                                                   color: Colors.red)))),
                                   onPressed: () async {
                                     DateTime? newDate = await showDatePicker(
                                         context: context,
                                         initialDate:
-                                        widget.product.getExpireDate,
+                                            widget.product.getExpireDate,
                                         firstDate: DateTime(min(
                                             DateTime.now().year,
                                             widget.product.getExpireDate.year)),
@@ -444,9 +464,9 @@ class _ProductState extends State<Product> {
 
                                     if (newDate != null) {
                                       setState(() => {
-                                        widget.product.setExpireDate =
-                                            newDate
-                                      });
+                                            widget.product.setExpireDate =
+                                                newDate
+                                          });
                                       widget.updateFunc(widget.product);
                                     }
                                   },
@@ -467,17 +487,17 @@ class _ProductState extends State<Product> {
                               ElevatedButton(
                                   style: ButtonStyle(
                                       shape: MaterialStateProperty.all<
-                                          RoundedRectangleBorder>(
+                                              RoundedRectangleBorder>(
                                           RoundedRectangleBorder(
                                               borderRadius:
-                                              BorderRadius.circular(18.0),
+                                                  BorderRadius.circular(18.0),
                                               side: const BorderSide(
                                                   color: Colors.red)))),
                                   onPressed: () async {
                                     DateTime? newDate = await showDatePicker(
                                         context: context,
                                         initialDate:
-                                        widget.product.getPurchaseDate,
+                                            widget.product.getPurchaseDate,
                                         firstDate: DateTime(min(
                                             DateTime.now().year,
                                             widget
@@ -489,9 +509,9 @@ class _ProductState extends State<Product> {
 
                                     if (newDate != null) {
                                       setState(() => {
-                                        widget.product.setPurchaseDate =
-                                            newDate
-                                      });
+                                            widget.product.setPurchaseDate =
+                                                newDate
+                                          });
                                       widget.updateFunc(widget.product);
                                     }
                                   },

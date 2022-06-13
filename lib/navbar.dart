@@ -63,9 +63,11 @@ class _MyHomePageState extends State<MyNavBar> {
 
     // ProfilePage(),
     Container(color: Colors.white),
-    Container(color: Colors.white),
-    MarketPage(title: ''),
+    Container(color: Colors.grey),
+    MarketPage(),
+    // Container(color: Colors.blueGrey),
     Profile()
+    //Container(color: Colors.white10)
   ];
 
   @override
@@ -73,7 +75,7 @@ class _MyHomePageState extends State<MyNavBar> {
     return Scaffold(
       appBar: AppBar(
           title: Center(
-            child: Text('Virtual Fridge'),
+            child: Text('Frigider Virtual'),
           )
       ),
       body: IndexedStack(
