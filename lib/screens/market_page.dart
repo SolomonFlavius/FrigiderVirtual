@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:frigider_virtual/models/market_recipe.dart';
 import 'package:frigider_virtual/services/market_recipes_service.dart';
-import 'package:frigider_virtual/services/recipe_service.dart';
+import 'package:frigider_virtual/services/recipes_service.dart';
 
 class MarketPage extends StatefulWidget {
   const MarketPage({Key? key, required this.title}) : super(key: key);
@@ -16,7 +16,7 @@ class MarketPage extends StatefulWidget {
 class _MarketPageState extends State<MarketPage> {
   late List<MarketRecipe> _marketRecipes = <MarketRecipe>[];
   final MarketRecipesService _marketRecipesService = MarketRecipesService();
-  final RecipeService _recipeService = RecipeService();
+  final RecipesService _recipesService = RecipesService();
 
   @override
   void initState() {

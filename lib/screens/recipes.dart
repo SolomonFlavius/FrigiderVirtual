@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frigider_virtual/models/recipe.dart';
-import 'package:frigider_virtual/services/recipe_service.dart';
+import 'package:frigider_virtual/services/recipes_service.dart';
 
 class RecipesPage extends StatefulWidget {
   const RecipesPage({Key? key}) : super(key: key);
@@ -11,7 +11,7 @@ class RecipesPage extends StatefulWidget {
 
 class _RecipesPageState extends State<RecipesPage> {
   late List<Recipe> _recipes = <Recipe>[];
-  final RecipeService _recipeService = RecipeService();
+  final RecipesService _recipesService = RecipesService();
 
   @override
   void initState() {
@@ -22,7 +22,7 @@ class _RecipesPageState extends State<RecipesPage> {
   }
 
   _getRecipes() async {
-    _recipes = await _recipeService.getRecipesWithIngredients();
+    _recipes = await _recipesService.getRecipesWithIngredients();
     setState(() => _recipes);
     // todo examples to use the service - remove later
     // print("\n#########\n");

@@ -4,10 +4,10 @@ import 'package:frigider_virtual/models/recipe.dart';
 import 'package:frigider_virtual/services/auth_service.dart';
 import 'package:frigider_virtual/services/users_service.dart';
 
-class RecipeService {
+class RecipesService {
   late CollectionReference<Map<String, dynamic>> _recipes;
 
-  RecipeService() {
+  RecipesService() {
     configureDB();
   }
 
@@ -64,11 +64,11 @@ class RecipeService {
 
   Future<String> addRecipeIngredient(
       String recipeId, Ingredient ingredient) async {
-    var recipeDoc = await _recipes
+    var ingredientDoc = await _recipes
         .doc(recipeId)
         .collection('ingredients')
         .add(ingredient.toMapWithoutId());
-    return recipeDoc.id;
+    return ingredientDoc.id;
   }
 
   Future deleteRecipeIngredient(String recipeId, Ingredient ingredient) async {
