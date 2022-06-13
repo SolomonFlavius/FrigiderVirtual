@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:frigider_virtual/products.dart';
+import 'package:frigider_virtual/profile.dart';
 import 'MyIcons.dart';
 import 'MarketPage.dart';
 
@@ -21,7 +24,7 @@ Map<int, Color> color =
 
 MaterialColor colorCustom = MaterialColor(0xff0e4d05, color);
 
-class MyApp extends StatelessWidget {
+/*class MyApp extends StatelessWidget {
   const MyApp ({Key? key}) : super(key: key);
 
   @override
@@ -32,17 +35,19 @@ class MyApp extends StatelessWidget {
       home: const MyNavBar(title: 'Frigider virtual'),
     );
   }
-}
+}*/
 
 class MyNavBar extends StatefulWidget {
   const MyNavBar({Key? key, required this.title}) : super(key: key);
   final String title;
+  
 
   @override
   State<MyNavBar> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyNavBar> {
+  final user = FirebaseAuth.instance.currentUser;//instanta pentru user
   int currentIndex = 0;
   PageController pageController = PageController();
 
@@ -58,11 +63,13 @@ class _MyHomePageState extends State<MyNavBar> {
     // RecipesPage(),
 
     // ProfilePage(),
-    Container(color: Colors.white),
+    //Container(color: Colors.white),
+    MyProductsPage(),
     Container(color: Colors.grey),
     MarketPage(),
     // Container(color: Colors.blueGrey),
-    Container(color: Colors.white10)
+    Profile()
+    //Container(color: Colors.white10)
   ];
 
   @override
