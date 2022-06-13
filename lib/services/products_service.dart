@@ -61,7 +61,7 @@ class ProductsService {
   }
 
   Future<List<ProductItem>> getProducts() async {
-    return await Future.delayed(const Duration(milliseconds: 40), () {
+    return await Future.delayed(const Duration(milliseconds: 1000), () {
       return db!.get().then((values) {
         List<ProductItem> products = <ProductItem>[];
         for (var value in values.docs) {

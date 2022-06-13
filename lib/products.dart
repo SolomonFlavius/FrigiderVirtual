@@ -21,12 +21,13 @@ class _MyProductsPageState extends State<MyProductsPage> {
   initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_){
-      setState(() {getProducts();});
-    });
+        getProducts();
+      });
   }
 
   getProducts() async {
     products = await _productsService.getProducts();
+    setState(() => {products});
   }
 
   updateList(ProductItem modifiedProduct) {
