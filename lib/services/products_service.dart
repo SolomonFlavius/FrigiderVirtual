@@ -32,8 +32,8 @@ class ProductsService {
       'name': item.getName,
       'description': item.getDescription,
       'category': item.getCategory,
-      'purchase_date': item.getPurchaseDate.millisecondsSinceEpoch,
-      'expiration_date': item.getExpireDate.millisecondsSinceEpoch,
+      'purchase_date': Timestamp(item.getPurchaseDate.millisecondsSinceEpoch ~/ 1000, 0),
+      'expiration_date': Timestamp(item.getExpireDate.millisecondsSinceEpoch ~/ 1000, 0),
       'quantity': num.parse(item.getQuantity),
       'quantity_measure': item.getMeasurement,
       'number_of_products':
@@ -47,8 +47,8 @@ class ProductsService {
       'name': item.getName,
       'description': item.getDescription,
       'category': item.getCategory,
-      'purchase_date': item.getPurchaseDate.millisecondsSinceEpoch,
-      'expiration_date': item.getExpireDate.millisecondsSinceEpoch,
+      'purchase_date': Timestamp(item.getPurchaseDate.millisecondsSinceEpoch ~/ 1000, 0),
+      'expiration_date': Timestamp(item.getExpireDate.millisecondsSinceEpoch ~/ 1000, 0),
       'quantity': num.parse(item.getQuantity),
       'quantity_measure': item.getMeasurement,
       'number_of_products':
@@ -73,8 +73,8 @@ class ProductsService {
             data['quantity_measure'],
             data['number_of_products'].toString(),
             data['category'],
-            DateTime.fromMillisecondsSinceEpoch(data['expiration_date']),
-            DateTime.fromMillisecondsSinceEpoch(data['purchase_date']),
+            DateTime.fromMillisecondsSinceEpoch(data['expiration_date'].millisecondsSinceEpoch),
+            DateTime.fromMillisecondsSinceEpoch(data['purchase_date'].millisecondsSinceEpoch),
             isExpanded: false,
             focus: false,
           ));
