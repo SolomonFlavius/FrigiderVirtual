@@ -7,8 +7,14 @@ import 'dart:collection';
 import 'main.dart';
 import 'ShowRecipe.dart';
 
-List<String> recepies = [];
-HashMap<String, List<List<String>>> products = HashMap();
+import '../models/recipe.dart';
+import '../services/recipe_service.dart';
+
+final Map<String, List<String>> products = {};
+final Map<String, List<int>> quantities = {};
+List<String> recipes = [];
+List<String> product = [];
+List<int> quantity = [];
 
 class AddRecipe extends StatelessWidget {
   @override
@@ -36,7 +42,7 @@ class AddRecipeForm extends StatefulWidget {
 class _AddRecepieForm1 extends State<AddRecipeForm> {
   final recipeController = TextEditingController();
   final productController = TextEditingController();
-  final gramController = TextEditingController();
+  final quantityController = TextEditingController();
 
   void disposeRecepie() {
     // Clean up the controller when the widget is disposed.
@@ -52,27 +58,26 @@ class _AddRecepieForm1 extends State<AddRecipeForm> {
 
   void disposeGram() {
     // Clean up the controller when the widget is disposed.
-    gramController.dispose();
+    quantityController.dispose();
     super.dispose();
   }
 
   void clearProduct() {
     productController.clear();
-    gramController.clear();
+    quantityController.clear();
   }
 
   void clearRecepie() {
     recipeController.clear();
     productController.clear();
-    gramController.clear();
-    for (var i = 0; i < recepies.length; i++) {
-      print(recepies[i]);
-    }
+    quantityController.clear();
+    product = [];
+    quantity = [];
   }
 
   void printProduct() {
     print("Product: " + productController.text);
-    print("Quantity: " + gramController.text);
+    print("Quantity: " + quantityController.text);
   }
 
   @override
@@ -99,7 +104,10 @@ class _AddRecepieForm1 extends State<AddRecipeForm> {
           child: Container(
             child: ElevatedButton(
               onPressed: () {
-                recepies.add(recipeController.text);
+                recipes.add(recipeController.text);
+                products[recipes.last] = product;
+                quantities[recipes.last] = quantity;
+                print(products);
                 clearRecepie();
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const MyApp()));
@@ -134,7 +142,7 @@ class _AddRecepieForm1 extends State<AddRecipeForm> {
           width: 100,
           child: Container(
             child: TextField(
-              controller: gramController,
+              controller: quantityController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(labelText: 'g product'),
             ),
@@ -147,7 +155,9 @@ class _AddRecepieForm1 extends State<AddRecipeForm> {
             child: Container(
                 child: ElevatedButton(
                     onPressed: () {
-                      printProduct();
+                      product.add(productController.text);
+                      int s = int.parse(quantityController.text);
+                      quantity.add(s);
                       clearProduct();
                     },
                     child: Text('Add Product')))),

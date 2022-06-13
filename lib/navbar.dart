@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:frigider_virtual/products.dart';
 import 'package:frigider_virtual/profile.dart';
 import 'MyIcons.dart';
 import 'MarketPage.dart';
+import 'products.dart';
 
 
 Map<int, Color> color =
@@ -62,14 +62,12 @@ class _MyHomePageState extends State<MyNavBar> {
     // ProductsPage(),
     // RecipesPage(),
 
-    // ProfilePage(),
-    //Container(color: Colors.white),
     MyProductsPage(),
-    Container(color: Colors.grey),
-    MarketPage(),
-    // Container(color: Colors.blueGrey),
+    Container(color: Colors.white),
+    // Container(color: Colors.grey),
+    MarketPage(title: ''),
+
     Profile()
-    //Container(color: Colors.white10)
   ];
 
   @override
