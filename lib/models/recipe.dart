@@ -1,103 +1,67 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-class Ingredients {
-  String? id;
-  late String? name;
-  int? quantity;
-  late String? quantityMeasure;
-
-  Ingredients(this.name, this.quantity, this.quantityMeasure) {}
-
-  String? get getName {
-    return name;
-  }
-
-  String? get getQuantityMeasure {
-    return quantityMeasure;
-  }
-
-  int? get getQuantity {
-    return quantity;
-  }
-
-  set setId(String id) {
-    this.id = id;
-  }
-
-  set setName(String? name) {
-    this.name = name;
-  }
-
-  set setQuantityMeasuree(String? quantityMeasure) {
-    this.quantityMeasure = quantityMeasure;
-  }
-
-  set setQuantity(int? quantity) {
-    this.quantity = quantity;
-  }
-}
+import 'package:frigider_virtual/models/ingredient.dart';
 
 class Recipe {
   String? id;
-  String? name;
-  String? description;
-  int? preparationTime;
-  Timestamp? createdAt;
-  Timestamp? updatedAt;
-  List<Ingredients> ingredients;
+  String name;
+  String description;
+  int preparationTime;
+  Timestamp createdAt;
+  Timestamp updatedAt;
+  List<Ingredient> ingredients;
 
-  Recipe(this.name, this.description, this.preparationTime, this.createdAt,
-      this.updatedAt, this.ingredients) {}
+  Recipe(
+    this.id,
+    this.name,
+    this.description,
+    this.preparationTime,
+    this.createdAt,
+    this.updatedAt,
+    this.ingredients,
+  );
 
-  String? get getId {
-    return id;
+  String get getPreparationTime {
+    var preparationTimeAsString = preparationTime.toString();
+    return "${preparationTimeAsString.substring(0, 2)}h${preparationTimeAsString.substring(2, 4) == "00" ? "" : "${preparationTimeAsString.substring(2, 4)}min"}${preparationTimeAsString.substring(4, 6) == "00" ? "" : "${preparationTimeAsString.substring(4, 6)}s"}";
   }
 
-  String? get getName {
-    return name;
+  factory Recipe.fromMap(Map<String, dynamic>? map) {
+    return Recipe(
+      map!['id'] as String?,
+      map['name'] as String,
+      map['description'] as String,
+      map['preparation_time'] as int,
+      map['created_at'] as Timestamp,
+      map['updated_at'] as Timestamp,
+      (map['ingredients'] as List<Ingredient>?) ?? <Ingredient>[],
+    );
   }
 
-  List<Ingredients> get getIngredients {
-    return ingredients;
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'description': description,
+      'preparation_time': preparationTime,
+      'created_at': createdAt,
+      'updated_at': updatedAt,
+      'ingredients': ingredients,
+    };
   }
 
-  int? get getPreparationTime {
-    return preparationTime;
+  Map<String, dynamic> toMapWithoutIdAndIngredients() {
+    return {
+      'name': name,
+      'description': description,
+      'preparation_time': preparationTime,
+      'created_at': createdAt,
+      'updated_at': updatedAt,
+    };
   }
 
-  String? get getDescription {
-    return description;
-  }
-
-  Timestamp? get getCreatedAt {
-    return createdAt;
-  }
-
-  Timestamp? get getUpdatedAt {
-    return updatedAt;
-  }
-
-  set setId(String id) {
-    this.id = id;
-  }
-
-  set setName(String? name) {
-    this.name = name;
-  }
-
-  set setDescription(String? description) {
-    this.description = description;
-  }
-
-  set setCreatedAt(Timestamp createdAt) {
-    this.createdAt = createdAt;
-  }
-
-  set setUpdatedAt(Timestamp updatedAt) {
-    this.updatedAt = updatedAt;
-  }
-
-  set setPreparationTime(int? preparationTime) {
-    this.preparationTime = preparationTime;
+  Map<String, dynamic> ingredientsToMap() {
+    return {
+      'ingredients': ingredients,
+    };
   }
 }

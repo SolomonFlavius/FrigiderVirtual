@@ -2,11 +2,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:frigider_virtual/settings/notification_management.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:frigider_virtual/widgets/navbar.dart';
 import 'package:frigider_virtual/screens/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
