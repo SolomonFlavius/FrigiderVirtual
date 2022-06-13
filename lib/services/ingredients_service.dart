@@ -1,16 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:frigider_virtual/models/product_item.dart';
 import 'package:frigider_virtual/services/users_service.dart';
 
-
 import '../models/recipe.dart';
 
-class RecipesService {
+class IngredientsService {
   late CollectionReference<Map<String, dynamic>>? db;
 
-  RecipesService() {
+  IngredientsService() {
     getDB();
   }
 
@@ -28,52 +26,46 @@ class RecipesService {
     db = FirebaseFirestore.instance
         .collection('users')
         .doc(userId)
-        .collection('recipes');
+        .collection('recipes')
+        .doc()
+        .collection('ingredientes');
   }
 
-  Future<String> addRecipe(Recipe item) async {
+  Future<String> addIngredient(Ingredients item) async {
     DocumentReference doc = await db!.add({
       'name': item.getName,
-      'description': item.getDescription,
-      'preparation_time': item.getPreparationTime,
-      'created_at': item.getCreatedAt,
-      'updated_at': item.getUpdatedAt,
-      'ingrediente': item.getIngredients,
+      'quantity': item.getQuantity,
+      'quantity_measure': item.getQuantityMeasure,
     });
     return doc.id;
   }
 
-  Future updateRecipe(Recipe item) async {
+  Future updateIngredientt(Ingredients item) async {
     await db!.doc(item.id).update({
       'name': item.getName,
-      'description': item.getDescription,
-      'preparation_time': item.getPreparationTime,
-      'created_at': item.getCreatedAt,
-      'updated_at': item.getUpdatedAt,
-      'ingrediente': item.getIngredients,
+      'quantity': item.getQuantity,
+      'quantity_measure': item.getQuantityMeasure,
     });
   }
 
-  Future deleteRecipe(Recipe item) async {
+  Future deleteIngredient(Recipe item) async {
     await db!.doc(item.id).delete();
   }
 
-  Future<List<Recipe>> getRecipe() async {
+  Future<List<Ingredients>> getIngredients() async {
     return await Future.delayed(const Duration(milliseconds: 40), () {
       return db!.get().then((values) {
-        List<Recipe> recipe = <Recipe>[];
+        List<Ingredients> ingredients = <Ingredients>[];
         for (var value in values.docs) {
           var data = value.data();
-          recipe.add(Recipe(
-              data['name'],
-              data['description'],
-              data['preparationTime'],
-              data['createdAt'],
-              data['updatedAt'],
-              data['ingrediente']));
-          recipe.last.setId = value.id;
+          ingredients.add(Ingredients(
+            data['name'],
+            data['quantity'],
+            data['quantity_measure'],
+          ));
+          ingredients.last.setId = value.id;
         }
-        return recipe;
+        return ingredients;
       });
     });
   }

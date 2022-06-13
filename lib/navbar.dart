@@ -2,25 +2,24 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:frigider_virtual/ShowRecipe.dart';
 import 'package:frigider_virtual/products.dart';
 import 'package:frigider_virtual/profile.dart';
 import 'MyIcons.dart';
 import 'MarketPage.dart';
 import 'products.dart';
 
-
-Map<int, Color> color =
-{
-  50:Color.fromRGBO(14, 77, 5, .1),
-  100:Color.fromRGBO(14, 77, 5, .2),
-  200:Color.fromRGBO(14, 77, 5, .3),
-  300:Color.fromRGBO(14, 77, 5, .4),
-  400:Color.fromRGBO(14, 77, 5, .5),
-  500:Color.fromRGBO(14, 77, 5, .6),
-  600:Color.fromRGBO(14, 77, 5, .7),
-  700:Color.fromRGBO(14, 77, 5, .8),
-  800:Color.fromRGBO(14, 77, 5, .9),
-  900:Color.fromRGBO(14, 77, 5, 1),
+Map<int, Color> color = {
+  50: Color.fromRGBO(14, 77, 5, .1),
+  100: Color.fromRGBO(14, 77, 5, .2),
+  200: Color.fromRGBO(14, 77, 5, .3),
+  300: Color.fromRGBO(14, 77, 5, .4),
+  400: Color.fromRGBO(14, 77, 5, .5),
+  500: Color.fromRGBO(14, 77, 5, .6),
+  600: Color.fromRGBO(14, 77, 5, .7),
+  700: Color.fromRGBO(14, 77, 5, .8),
+  800: Color.fromRGBO(14, 77, 5, .9),
+  900: Color.fromRGBO(14, 77, 5, 1),
 };
 
 MaterialColor colorCustom = MaterialColor(0xff0e4d05, color);
@@ -28,31 +27,27 @@ MaterialColor colorCustom = MaterialColor(0xff0e4d05, color);
 class MyNavBar extends StatefulWidget {
   const MyNavBar({Key? key, required this.title}) : super(key: key);
   final String title;
-  
 
   @override
   State<MyNavBar> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyNavBar> {
-  final user = FirebaseAuth.instance.currentUser;//instanta pentru user
+  final user = FirebaseAuth.instance.currentUser; //instanta pentru user
   int currentIndex = 0;
   PageController pageController = PageController();
 
-
-
-  void onTap(int index){
-    setState((){ currentIndex = index; });
-    pageController.animateToPage(index, duration: Duration(milliseconds: 100), curve: Curves.bounceIn);
+  void onTap(int index) {
+    setState(() {
+      currentIndex = index;
+    });
+    pageController.animateToPage(index,
+        duration: Duration(milliseconds: 100), curve: Curves.bounceIn);
   }
 
   final screens = [
-    // ProductsPage(),
-    // RecipesPage(),
-
     MyProductsPage(),
-    Container(color: Colors.white),
-    // Container(color: Colors.grey),
+    ShowRecipes(),
     MarketPage(title: ''),
     Profile()
   ];
@@ -62,9 +57,8 @@ class _MyHomePageState extends State<MyNavBar> {
     return Scaffold(
       appBar: AppBar(
           title: Center(
-            child: Text('Frigider Virtual'),
-          )
-      ),
+        child: Text('Frigider Virtual'),
+      )),
       body: IndexedStack(
         index: currentIndex,
         children: screens,
@@ -80,7 +74,6 @@ class _MyHomePageState extends State<MyNavBar> {
               icon: Icon(Icons.food_bank),
               label: 'Recipes',
               backgroundColor: Color(0xff0e4d05),
-
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.store),
@@ -105,9 +98,8 @@ class _MyHomePageState extends State<MyNavBar> {
   }
 }
 
-class DatabaseService{
-
+class DatabaseService {
   // collection reference
-  final CollectionReference recepie = FirebaseFirestore.instance.collection('recipes');
-
+  final CollectionReference recepie =
+      FirebaseFirestore.instance.collection('recipes');
 }
