@@ -3,10 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:frigider_virtual/services/users_service.dart';
-import 'models/ingredient.dart';
+import '../models/ingredient.dart';
 import 'package:frigider_virtual/services/market_recipe_service.dart';
 
-import 'models/market_recipe.dart';
+import '../models/market_recipe.dart';
 
 class MarketPage extends StatefulWidget{
   const MarketPage({Key? key, required this.title}) : super(key: key);

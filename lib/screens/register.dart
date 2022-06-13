@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:frigider_virtual/navbar.dart';
+import 'package:frigider_virtual/widgets/navbar.dart';
 import 'package:frigider_virtual/models/user.dart' as UserDB;
 import 'package:frigider_virtual/services/users_service.dart';
 

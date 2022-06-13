@@ -5,7 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:frigider_virtual/auth.dart';
+import 'package:frigider_virtual/screens/auth.dart';
 import 'package:frigider_virtual/models/user.dart' as UserDB;
 import 'package:frigider_virtual/services/users_service.dart';
 

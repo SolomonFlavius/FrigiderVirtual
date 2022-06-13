@@ -2,12 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:frigider_virtual/ShowRecipe.dart';
-import 'package:frigider_virtual/products.dart';
-import 'package:frigider_virtual/profile.dart';
-import 'MyIcons.dart';
-import 'MarketPage.dart';
-import 'products.dart';
+import 'package:frigider_virtual/screens/show_recipe.dart';
+import 'package:frigider_virtual/screens/profile.dart';
+import 'my_icons.dart';
+import '../screens/market_page.dart';
+import '../screens/products.dart';
 
 Map<int, Color> color = {
   50: Color.fromRGBO(14, 77, 5, .1),
