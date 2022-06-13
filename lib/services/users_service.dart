@@ -30,6 +30,10 @@ class UsersService {
     });
   }
 
+  static Future<DocumentReference> getUserReferenceByEmail(String email) async {
+    return _users.doc(await getUserId(email));
+  }
+
   static Future<String> getUserId(String email) async {
     return _users.where('email', isEqualTo: email).get().then((value) {
       return value.docs[0].id;
