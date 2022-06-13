@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -8,7 +9,7 @@ import 'package:frigider_virtual/screens/add_recipe_form.dart';
 
 import '../../models/recipe.dart';
 import '../../services/recipe_service.dart';
-
+import 'ingredients_show.dart';
 
 int iterator = 0;
 
@@ -72,31 +73,27 @@ class _ShowRecipes extends StatelessWidget {
         ),
       ),
       Positioned(
-        top: 350,
-        right: 300,
+        top: 80,
+        left: 160,
         child: Container(
-          child: ElevatedButton(
-            child: const Icon(Icons.arrow_circle_left),
-
-            onPressed: () {
-              iterator -= 1;
-            },
-
-          ),
-        ),
-      ),
-      Positioned(
-        top: 350,
-        left: 300,
-        child: Container(
-          child: ElevatedButton(
-            child: const Icon(Icons.arrow_circle_right),
-            onPressed: () {
-              iterator += 1;
-              if (iterator >= recipe.length) iterator -= 1;
-              MaterialPageRoute(builder: (context) => ShowRecipes());
-            },
-          ),
+          color: Colors.blue,
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            for (int i = 0; i < recipe.length; i++)
+              Container(
+                child: InkWell(
+                  onTap: () {
+                    print(i);
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => IngredientsShow(i)));
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.all(12.0),
+                    child: Text(recipe[i].getName.toString(),
+                        style: TextStyle(fontSize: 20, color: Colors.white)),
+                  ),
+                ),
+              ),
+          ]),
         ),
       ),
     ]);
