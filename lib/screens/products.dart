@@ -19,9 +19,9 @@ class _MyProductsPageState extends State<MyProductsPage> {
   @override
   initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_){
-        getProducts();
-      });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      getProducts();
+    });
   }
 
   getProducts() async {
@@ -66,37 +66,37 @@ class _MyProductsPageState extends State<MyProductsPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const Padding(
-                      padding: EdgeInsets.only(top: 50.0),
+                      padding: EdgeInsets.only(top: 30.0, bottom: 20.0),
                       child: Text("Products",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               fontSize: 60,
                               fontWeight: FontWeight.bold,
                               color: Colors.white60))),
-                  // Product(
-                  //     product: ProductItem("Banane", "", "100", "-", "",
-                  //         "Other", DateTime.now(), DateTime.now(),
-                  //         focus: false),
-                  //     updateFunc: updateList),
                   Expanded(
                       child: ListView.builder(
                           itemCount: products.length + 1,
                           itemBuilder: (context, index) {
                             if (index < products.length) {
-                              return Dismissible(
-                                  key: ValueKey(products[index].getId),
-                                  background: Container(
-                                      color: Colors.red,
-                                      child: const Icon(Icons.delete_forever,
-                                          size: 100)),
-                                  onDismissed: (direction) {
-                                    _productsService.deleteProduct(products[index]);
-                                    setState(() => {products.removeAt(index)});
-                                  },
-                                  child: Product(
-                                    product: products[index],
-                                    updateFunc: updateList,
-                                  ));
+                              return Padding(
+                                  padding: const EdgeInsets.only(bottom: 10),
+                                  child: Dismissible(
+                                      key: ValueKey(products[index].getId),
+                                      background: Container(
+                                          color: Colors.red,
+                                          child: const Icon(
+                                              Icons.delete_forever,
+                                              size: 60)),
+                                      onDismissed: (direction) {
+                                        _productsService
+                                            .deleteProduct(products[index]);
+                                        setState(
+                                            () => {products.removeAt(index)});
+                                      },
+                                      child: Product(
+                                        product: products[index],
+                                        updateFunc: updateList,
+                                      )));
                             } else {
                               return const SizedBox(height: 150);
                             }
@@ -184,7 +184,7 @@ class _ProductState extends State<Product> {
   Widget build(BuildContext context) {
     return Center(
         child: Padding(
-            padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 6),
+            padding: const EdgeInsets.only(left: 10.0, right: 10.0),
             child: ClipRRect(
                 borderRadius: BorderRadius.circular(25),
                 child: ExpansionPanelList(
@@ -194,40 +194,40 @@ class _ProductState extends State<Product> {
                         return Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const SizedBox(
-                                width: 60,
-                                child: Icon(Icons.food_bank,
-                                    size: 40, color: Colors.blue)),
+                            const Padding(
+                                padding: EdgeInsets.only(left: 8),
+                                child: SizedBox(
+                                    width: 50,
+                                    child: Icon(Icons.food_bank,
+                                        size: 35, color: Colors.blue))),
                             Expanded(
-                                child: Padding(
-                                    padding: const EdgeInsets.only(left: 0.0),
-                                    child: SingleChildScrollView(
-                                        keyboardDismissBehavior:
-                                            ScrollViewKeyboardDismissBehavior
-                                                .onDrag,
-                                        child: TextField(
-                                          controller: myNameController,
-                                          minLines: 1,
-                                          maxLines: 3,
-                                          maxLength: 45,
-                                          focusNode: myFocusNode,
-                                          textAlignVertical:
-                                              TextAlignVertical.center,
-                                          style: const TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 26,
-                                          ),
-                                          decoration: const InputDecoration(
-                                            hintText: "Product name",
-                                            border: InputBorder.none,
-                                            counterText: "",
-                                          ),
-                                          onChanged: (text) => {
-                                            widget.product.setName = text,
-                                            widget.updateFunc(widget.product)
-                                          },
-                                        )))),
+                                child: SingleChildScrollView(
+                                    keyboardDismissBehavior:
+                                        ScrollViewKeyboardDismissBehavior
+                                            .onDrag,
+                                    child: TextField(
+                                      controller: myNameController,
+                                      minLines: 1,
+                                      maxLines: 3,
+                                      maxLength: 45,
+                                      focusNode: myFocusNode,
+                                      textAlignVertical:
+                                          TextAlignVertical.center,
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 23,
+                                      ),
+                                      decoration: const InputDecoration(
+                                        hintText: "Product name",
+                                        border: InputBorder.none,
+                                        counterText: "",
+                                      ),
+                                      onChanged: (text) => {
+                                        widget.product.setName = text,
+                                        widget.updateFunc(widget.product)
+                                      },
+                                    ))),
                           ],
                         );
                       },
@@ -238,9 +238,9 @@ class _ProductState extends State<Product> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 const SizedBox(
-                                    width: 60,
+                                    width: 50,
                                     child: Icon(Icons.description,
-                                        size: 40, color: Colors.blue)),
+                                        size: 35, color: Colors.blue)),
                                 Expanded(
                                     child: Padding(
                                         padding:
@@ -260,7 +260,7 @@ class _ProductState extends State<Product> {
                                               style: const TextStyle(
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.bold,
-                                                fontSize: 26,
+                                                fontSize: 23,
                                               ),
                                               decoration: const InputDecoration(
                                                 hintText: "Description",
@@ -278,9 +278,9 @@ class _ProductState extends State<Product> {
                             ),
                             Row(children: [
                               const SizedBox(
-                                  width: 60,
+                                  width: 50,
                                   child: Icon(Icons.shopping_bag,
-                                      size: 40, color: Colors.blue)),
+                                      size: 35, color: Colors.blue)),
                               SizedBox(
                                   width: 70,
                                   child: SingleChildScrollView(
@@ -296,7 +296,7 @@ class _ProductState extends State<Product> {
                                         style: const TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 26,
+                                          fontSize: 23,
                                         ),
                                         decoration: const InputDecoration(
                                           hintText: "1.0",
@@ -309,7 +309,7 @@ class _ProductState extends State<Product> {
                                         },
                                       ))),
                               Container(
-                                  height: 40,
+                                  height: 35,
                                   decoration: BoxDecoration(
                                       border: Border.all(
                                           width: 2.0, color: Colors.blue),
@@ -327,7 +327,7 @@ class _ProductState extends State<Product> {
                                             child: Text(
                                               item,
                                               style: const TextStyle(
-                                                  fontSize: 20,
+                                                  fontSize: 18,
                                                   fontWeight: FontWeight.bold),
                                             ),
                                           );
@@ -350,51 +350,49 @@ class _ProductState extends State<Product> {
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.blue,
-                                        fontSize: 26,
+                                        fontSize: 24,
                                       ))),
                               SizedBox(
                                   width: 100,
-                                  child: Padding(
-                                      padding: const EdgeInsets.only(left: 0.0),
-                                      child: SingleChildScrollView(
-                                          keyboardDismissBehavior:
-                                              ScrollViewKeyboardDismissBehavior
-                                                  .onDrag,
-                                          child: TextField(
-                                            controller: myAmountController,
-                                            keyboardType: TextInputType.number,
-                                            minLines: 1,
-                                            textAlignVertical:
-                                                TextAlignVertical.center,
-                                            style: const TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 26,
-                                            ),
-                                            decoration: const InputDecoration(
-                                              hintText: "amount",
-                                              border: InputBorder.none,
-                                              counterText: "",
-                                            ),
-                                            onChanged: (text) => {
-                                              widget.product.setAmount = text,
-                                              widget.updateFunc(widget.product)
-                                            },
-                                          ))))
+                                  child: SingleChildScrollView(
+                                      keyboardDismissBehavior:
+                                          ScrollViewKeyboardDismissBehavior
+                                              .onDrag,
+                                      child: TextField(
+                                        controller: myAmountController,
+                                        keyboardType: TextInputType.number,
+                                        minLines: 1,
+                                        textAlignVertical:
+                                            TextAlignVertical.center,
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 23,
+                                        ),
+                                        decoration: const InputDecoration(
+                                          hintText: "amount",
+                                          border: InputBorder.none,
+                                          counterText: "",
+                                        ),
+                                        onChanged: (text) => {
+                                          widget.product.setAmount = text,
+                                          widget.updateFunc(widget.product)
+                                        },
+                                      )))
                             ]),
                             Row(children: [
                               const SizedBox(
-                                  width: 60,
+                                  width: 50,
                                   child: Icon(Icons.fastfood,
-                                      size: 40, color: Colors.blue)),
+                                      size: 35, color: Colors.blue)),
                               const Padding(
                                   padding: EdgeInsets.only(right: 8),
                                   child: Text("Category:",
                                       style: TextStyle(
-                                          fontSize: 22,
+                                          fontSize: 19,
                                           fontWeight: FontWeight.bold))),
                               Container(
-                                  height: 40,
+                                  height: 35,
                                   decoration: BoxDecoration(
                                       border: Border.all(
                                           width: 2.0, color: Colors.blue),
@@ -412,7 +410,7 @@ class _ProductState extends State<Product> {
                                             child: Text(
                                               item,
                                               style: const TextStyle(
-                                                  fontSize: 20,
+                                                  fontSize: 18,
                                                   fontWeight: FontWeight.bold),
                                             ),
                                           );
@@ -431,24 +429,27 @@ class _ProductState extends State<Product> {
                             ]),
                             Row(children: [
                               const SizedBox(
-                                  width: 60,
+                                  width: 50,
                                   child: Icon(Icons.schedule,
-                                      size: 40, color: Colors.blue)),
+                                      size: 35, color: Colors.blue)),
                               const Text("Expiring date: ",
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 20,
+                                    fontSize: 19,
                                   )),
                               ElevatedButton(
                                   style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              Colors.blue),
                                       shape: MaterialStateProperty.all<
                                               RoundedRectangleBorder>(
                                           RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(18.0),
                                               side: const BorderSide(
-                                                  color: Colors.red)))),
+                                                  color: Colors.blue)))),
                                   onPressed: () async {
                                     DateTime? newDate = await showDatePicker(
                                         context: context,
@@ -475,24 +476,27 @@ class _ProductState extends State<Product> {
                             ]),
                             Row(children: [
                               const SizedBox(
-                                  width: 60,
+                                  width: 50,
                                   child: Icon(Icons.schedule,
-                                      size: 40, color: Colors.blue)),
+                                      size: 35, color: Colors.blue)),
                               const Text("Purchased date: ",
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 20,
+                                    fontSize: 19,
                                   )),
                               ElevatedButton(
                                   style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              Colors.blue),
                                       shape: MaterialStateProperty.all<
                                               RoundedRectangleBorder>(
                                           RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(18.0),
                                               side: const BorderSide(
-                                                  color: Colors.red)))),
+                                                  color: Colors.blue)))),
                                   onPressed: () async {
                                     DateTime? newDate = await showDatePicker(
                                         context: context,
