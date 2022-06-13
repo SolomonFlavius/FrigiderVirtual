@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:frigider_virtual/models/product_item.dart';
 import 'package:frigider_virtual/services/products_service.dart';
