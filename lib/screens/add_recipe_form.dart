@@ -5,13 +5,13 @@ import 'package:flutter/rendering.dart';
 import 'dart:collection';
 import 'package:intl/intl.dart';
 
-import 'main.dart';
-import 'ShowRecipe.dart';
+import '../main.dart';
+import 'show_recipe.dart';
 
 
-import '../services/recipe_service.dart';
-import '../models/recipe.dart';
-import '../services/recipe_service.dart';
+import '../../services/recipe_service.dart';
+import '../../models/recipe.dart';
+import '../../services/recipe_service.dart';
 
 final Map<String?, List<String?>> products = {};
 final Map<String?, List<int?>> quantities = {};

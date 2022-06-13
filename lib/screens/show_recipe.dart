@@ -3,11 +3,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/rendering.dart';
 
-import 'main.dart';
-import 'package:frigider_virtual/AddRecipeForm.dart';
+import '../main.dart';
+import 'package:frigider_virtual/screens/add_recipe_form.dart';
 
-import '../models/recipe.dart';
-import '../services/recipe_service.dart';
+import '../../models/recipe.dart';
+import '../../services/recipe_service.dart';
 
 
 int iterator = 0;
