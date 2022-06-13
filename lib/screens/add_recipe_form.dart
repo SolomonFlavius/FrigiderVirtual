@@ -8,9 +8,9 @@ import 'package:intl/intl.dart';
 import '../main.dart';
 import 'show_recipe.dart';
 
-import '../../services/recipe_service.dart';
+import '../services/recipes_service.dart';
 import '../../models/recipe.dart';
-import '../../services/recipe_service.dart';
+import '../services/recipes_service.dart';
 
 final Map<String?, List<String?>> products = {};
 final Map<String?, List<int?>> quantities = {};
