@@ -14,13 +14,8 @@ int iterator = 0;
 class ShowRecipes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    const appTitle = 'Virtual Fridge';
     return MaterialApp(
-      title: appTitle,
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text(appTitle),
-        ),
         body: _ShowRecipes(),
       ),
     );

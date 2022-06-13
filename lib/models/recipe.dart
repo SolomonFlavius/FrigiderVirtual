@@ -1,16 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Ingredients {
-  int? id;
-  late String name;
+  String? id;
+  late String? name;
   int? quantity;
-  late String quantityMeasure;
+  late String? quantityMeasure;
 
-  String get getName {
+  Ingredients(this.name, this.quantity, this.quantityMeasure) {}
+
+  String? get getName {
     return name;
   }
 
-  String get getQuantityMeasure {
+  String? get getQuantityMeasure {
     return quantityMeasure;
   }
 
@@ -18,23 +20,27 @@ class Ingredients {
     return quantity;
   }
 
-  set setName(String name) {
+  set setId(String id) {
+    this.id = id;
+  }
+
+  set setName(String? name) {
     this.name = name;
   }
 
-  set setQuantityMeasuree(String quantityMeasure) {
+  set setQuantityMeasuree(String? quantityMeasure) {
     this.quantityMeasure = quantityMeasure;
   }
 
-  set setQuantity(int quantity) {
+  set setQuantity(int? quantity) {
     this.quantity = quantity;
   }
 }
 
 class Recipe {
   String? id;
-  String name;
-  String description;
+  String? name;
+  String? description;
   int? preparationTime;
   Timestamp? createdAt;
   Timestamp? updatedAt;
@@ -47,7 +53,7 @@ class Recipe {
     return id;
   }
 
-  String get getName {
+  String? get getName {
     return name;
   }
 
@@ -59,7 +65,7 @@ class Recipe {
     return preparationTime;
   }
 
-  String get getDescription {
+  String? get getDescription {
     return description;
   }
 
@@ -71,11 +77,15 @@ class Recipe {
     return updatedAt;
   }
 
-  set setName(String name) {
+  set setId(String id) {
+    this.id = id;
+  }
+
+  set setName(String? name) {
     this.name = name;
   }
 
-  set setDescription(String description) {
+  set setDescription(String? description) {
     this.description = description;
   }
 
@@ -85,5 +95,9 @@ class Recipe {
 
   set setUpdatedAt(Timestamp updatedAt) {
     this.updatedAt = updatedAt;
+  }
+
+  set setPreparationTime(int? preparationTime) {
+    this.preparationTime = preparationTime;
   }
 }

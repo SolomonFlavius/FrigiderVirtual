@@ -8,29 +8,26 @@ import 'package:intl/intl.dart';
 import 'main.dart';
 import 'ShowRecipe.dart';
 
+import '../services/recipe_service.dart';
 import '../models/recipe.dart';
 import '../services/recipe_service.dart';
 
-final Map<String, List<String>> products = {};
-final Map<String, List<int>> quantities = {};
-List<String> recipes = [];
-List<String> description = [];
-List<String> product = [];
-List<int> preparationTime = [];
-List<int> quantity = [];
+final Map<String?, List<String?>> products = {};
+final Map<String?, List<int?>> quantities = {};
+List<String?> recipes = [];
+List<String?> description = [];
+List<String?> product = [];
+List<int?> preparationTime = [];
+List<int?> quantity = [];
 
 List<Recipe> recipe = [];
+RecipesService recipeService = RecipesService();
 
 class AddRecipe extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    const appTitle = 'Virtual Fridge';
     return MaterialApp(
-      title: appTitle,
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text(appTitle),
-        ),
         body: const AddRecipeForm(),
       ),
     );
@@ -85,7 +82,7 @@ class _AddRecepieForm1 extends State<AddRecipeForm> {
   void createRecipe() {
     List<Ingredients> ingredients = [];
     for (int i = 0; i < product.length; i++) {
-      Ingredients ing = Ingredients();
+      Ingredients ing = Ingredients("", 0, "");
       ing.setName = product[i];
       ing.setQuantity = quantity[i];
       ing.setQuantityMeasuree = "gram";
@@ -99,7 +96,8 @@ class _AddRecepieForm1 extends State<AddRecipeForm> {
         Timestamp.fromDate(DateTime.now()),
         ingredients);
     recipe.add(rep);
-    print("Am adaugta cacatul asta");
+    recipeService.addRecipe(recipe.last);
+    print("Am adaugta reteta");
   }
 
   void printProduct() {
@@ -141,7 +139,7 @@ class _AddRecepieForm1 extends State<AddRecipeForm> {
                 createRecipe();
                 clearRecepie();
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const MyApp()));
+                    MaterialPageRoute(builder: (context) => ShowRecipes()));
               },
               child: const Icon(Icons.add),
               style: ElevatedButton.styleFrom(
