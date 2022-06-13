@@ -6,6 +6,7 @@ import 'package:frigider_virtual/products.dart';
 import 'package:frigider_virtual/profile.dart';
 import 'MyIcons.dart';
 import 'MarketPage.dart';
+import 'products.dart';
 
 
 Map<int, Color> color =
@@ -23,19 +24,6 @@ Map<int, Color> color =
 };
 
 MaterialColor colorCustom = MaterialColor(0xff0e4d05, color);
-
-/*class MyApp extends StatelessWidget {
-  const MyApp ({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(primarySwatch: colorCustom),
-      home: const MyNavBar(title: 'Frigider virtual'),
-    );
-  }
-}*/
 
 class MyNavBar extends StatefulWidget {
   const MyNavBar({Key? key, required this.title}) : super(key: key);
@@ -55,21 +43,18 @@ class _MyHomePageState extends State<MyNavBar> {
 
   void onTap(int index){
     setState((){ currentIndex = index; });
-    //pageController.animateToPage(index, duration: Duration(milliseconds: 100), curve: Curves.bounceIn);
+    pageController.animateToPage(index, duration: Duration(milliseconds: 100), curve: Curves.bounceIn);
   }
 
   final screens = [
     // ProductsPage(),
     // RecipesPage(),
 
-    // ProfilePage(),
-    //Container(color: Colors.white),
     MyProductsPage(),
-    Container(color: Colors.grey),
-    MarketPage(),
-    // Container(color: Colors.blueGrey),
+    Container(color: Colors.white),
+    // Container(color: Colors.grey),
+    MarketPage(title: ''),
     Profile()
-    //Container(color: Colors.white10)
   ];
 
   @override

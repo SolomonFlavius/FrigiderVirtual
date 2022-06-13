@@ -5,6 +5,11 @@ import 'package:flutter/rendering.dart';
 import 'main.dart';
 import 'package:frigider_virtual/AddRecipeForm.dart';
 
+import '../models/recipe.dart';
+import '../services/recipe_service.dart';
+
+RecipesService recipesService = RecipesService();
+
 class ShowRecipes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -21,7 +26,6 @@ class ShowRecipes extends StatelessWidget {
   }
 }
 
-// First Page
 class _ShowRecipes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -59,6 +63,33 @@ class _ShowRecipes extends StatelessWidget {
         child: Container(
           child: ElevatedButton(
             child: const Icon(Icons.soup_kitchen_outlined),
+            onPressed: () {},
+          ),
+        ),
+      ),
+      Positioned(
+        top: 250,
+        right: 150,
+        child: Container(
+          color: Colors.grey,
+        ),
+      ),
+      Positioned(
+        top: 350,
+        right: 300,
+        child: Container(
+          child: ElevatedButton(
+            child: const Icon(Icons.arrow_circle_left),
+            onPressed: () {},
+          ),
+        ),
+      ),
+      Positioned(
+        top: 350,
+        left: 300,
+        child: Container(
+          child: ElevatedButton(
+            child: const Icon(Icons.arrow_circle_right),
             onPressed: () {},
           ),
         ),
