@@ -10,8 +10,13 @@ import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(MyApp());
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
+      .then(
+    (value) => {
+      runApp(const MyApp()),
+      NotificationManagement().configure(),
+    },
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -19,22 +24,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(primarySwatch: colorCustom),
-      home: StreamBuilder<User?>(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot){
-          if(snapshot.hasData)
-          {
-            return MyNavBar(title: '');
-          }
-          else
-          {
-            return Auth();
-          }
-        },
-      )
-    );
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(primarySwatch: colorCustom),
+        home: StreamBuilder<User?>(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return MyNavBar(title: '');
+            } else {
+              return Auth();
+            }
+          },
+        ));
   }
 }
