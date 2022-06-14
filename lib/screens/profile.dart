@@ -29,6 +29,45 @@ async
       return userData!.firstName;
 }
 
+Future<String> getLastName() async {
+  var currentUser = FirebaseAuth.instance.currentUser;
+  if (currentUser == null) {
+    return 'null';
+  }
+  var userEmail = currentUser.email;
+  if (userEmail == null) {
+    return 'null';
+  }
+  var userData = await UsersService.getUserByEmail(userEmail);
+  return userData!.lastName;
+}
+
+Future<String> getPhoneNumber() async {
+  var currentUser = FirebaseAuth.instance.currentUser;
+  if (currentUser == null) {
+    return 'null';
+  }
+  var userEmail = currentUser.email;
+  if (userEmail == null) {
+    return 'null';
+  }
+  var userData = await UsersService.getUserByEmail(userEmail);
+  return userData!.phoneNumber;
+}
+
+Future<String> getEmail() async {
+  var currentUser = FirebaseAuth.instance.currentUser;
+  if (currentUser == null) {
+    return 'null';
+  }
+  var userEmail = currentUser.email;
+  if (userEmail == null) {
+    return 'null';
+  }
+  var userData = await UsersService.getUserByEmail(userEmail);
+  return userData!.email;
+}
+
 
 class _Profile extends State<Profile> {
   static final user = FirebaseAuth.instance.currentUser!;
@@ -56,11 +95,11 @@ class _Profile extends State<Profile> {
           },
         padding: EdgeInsets.all(15),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        color: Colors.white,
+        color: Colors.red,
         child: Text(
-          'LOGOUT FROM ${user.email}',
+          'LOGOUT',
           style: TextStyle(
-              color: Color(0xff5ac18e),
+              color: Colors.white,
               fontSize: 18,
               fontWeight: FontWeight.bold),
         ),
@@ -68,16 +107,99 @@ class _Profile extends State<Profile> {
     );
   }
 
-  Widget buildFirstName()
-  {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 20),
-      width: double.infinity,
-      child: Text(
-        'First name: $firstName'
-      ),
-    );
+  Widget buildFirstName(){
+    return FutureBuilder<String>(
+      future: getFirstName(),
+      builder: (context, snapshot)
+      {
+        if(snapshot.hasError)
+        {
+          return Text('snapshot error');
+        }
+        else if(snapshot.hasData)
+        {
+          final firstName = snapshot.data;
+          return firstName == null
+            ? Center(child: Text('no name'))
+            : Center(child: Text('First name: ${firstName}',
+                            style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold)));
+        }
+        else{
+          return Center(child: CircularProgressIndicator());
+        }
+      }
+      );
   }
+
+  Widget buildLastName() {
+    return FutureBuilder<String>(
+        future: getLastName(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Text('snapshot error');
+          } else if (snapshot.hasData) {
+            final lastName = snapshot.data;
+            return lastName == null
+                ? Center(child: Text('no name'))
+                : Center(
+                    child: Text('Last name: ${lastName}',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold)));
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        });
+  }
+
+  Widget buildPhoneNumber() {
+    return FutureBuilder<String>(
+        future: getPhoneNumber(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Text('snapshot error');
+          } else if (snapshot.hasData) {
+            final phoneNumber = snapshot.data;
+            return phoneNumber == null
+                ? Center(child: Text('no name'))
+                : Center(
+                    child: Text('Phone number: ${phoneNumber}',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold)));
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        });
+  }
+
+  Widget buildEmail() {
+    return FutureBuilder<String>(
+        future: getEmail(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Text('snapshot error');
+          } else if (snapshot.hasData) {
+            final email = snapshot.data;
+            return email == null
+                ? Center(child: Text('no name'))
+                : Center(
+                    child: Text('Email: ${email}',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold)));
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -106,16 +228,15 @@ class _Profile extends State<Profile> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Text(
-                            'Profile',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 40,
-                                fontWeight: FontWeight.bold),
-                          ),
                           SizedBox(height: 30),
-                          buildLogout(),
                           buildFirstName(),
+                          SizedBox(height: 10),
+                          buildLastName(),
+                          SizedBox(height: 10),
+                          buildPhoneNumber(),
+                          SizedBox(height: 10),
+                          buildEmail(),
+                          buildLogout(),
                         ],
                       ),
                     )))
