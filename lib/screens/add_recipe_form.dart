@@ -6,31 +6,44 @@ import 'dart:collection';
 import 'package:intl/intl.dart';
 
 import '../main.dart';
+import '../models/ingredient.dart';
 import 'show_recipe.dart';
 
 import '../services/recipes_service.dart';
 import '../../models/recipe.dart';
 import '../services/recipes_service.dart';
 
-final Map<String?, List<String?>> products = {};
-final Map<String?, List<int?>> quantities = {};
-List<String?> recipes = [];
-List<String?> description = [];
-List<String?> product = [];
-List<int?> preparationTime = [];
-List<int?> quantity = [];
-
-List<Recipe> recipe = [];
-// RecipesService recipeService = RecipesService();
+List<String> recipesName = [];
+List<String> description = [];
+List<String> product = [];
+List<int> preparationTime = [];
+List<int> quantity = [];
 
 class AddRecipe extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        body: const AddRecipeForm(),
-      ),
-    );
+        home: GestureDetector(
+            onTap: () {
+              FocusScopeNode currentFocus = FocusScope.of(context);
+              if (!currentFocus.hasPrimaryFocus) {
+                currentFocus.unfocus();
+              }
+            },
+            child: Scaffold(
+                body: Container(
+                    alignment: Alignment.center,
+                    decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                          Color(0x665ac18e),
+                          Color(0x995ac18e),
+                          Color(0xcc5ac18e),
+                          Color(0xff5ac18e),
+                        ])),
+                    child: AddRecipeForm()))));
   }
 }
 
@@ -72,7 +85,7 @@ class _AddRecepieForm1 extends State<AddRecipeForm> {
     quantityController.clear();
   }
 
-  void clearRecepie() {
+  void clearRecipe() {
     recipeController.clear();
     productController.clear();
     quantityController.clear();
@@ -80,30 +93,29 @@ class _AddRecepieForm1 extends State<AddRecipeForm> {
     quantity = [];
   }
 
-  void createRecipe() {
-    // List<Ingredients> ingredients = [];
-    // for (int i = 0; i < product.length; i++) {
-    //   Ingredients ing = Ingredients("", 0, "");
-    //   ing.setName = product[i];
-    //   ing.setQuantity = quantity[i];
-    //   ing.setQuantityMeasuree = "gram";
-    //   ingredients.add(ing);
-    // }
-    // Recipe rep = Recipe(
-    //     recipes.last,
-    //     description.last,
-    //     preparationTime.last,
-    //     Timestamp.fromDate(DateTime.now()),
-    //     Timestamp.fromDate(DateTime.now()),
-    //     ingredients);
-    // recipe.add(rep);
-    // recipeService.addRecipe(recipe.last);
-    // print("Am adaugta reteta");
-  }
+  void createRecipe() async {
+    print("\n#########\n");
+    var ingredients = <Ingredient>[];
+    var recipe = Recipe(null, "recipe_name", "description", 215900,
+        Timestamp.now(), Timestamp.now(), ingredients);
+    var recipeId = await recipesService.addRecipe(recipe);
+    recipe = await recipesService.getRecipeById(recipeId);
 
-  void printProduct() {
-    print("Product: " + productController.text);
-    print("Quantity: " + quantityController.text);
+    recipe.name = recipesName.last;
+    recipe.description = description.last;
+    recipe.preparationTime = preparationTime.last;
+    for (int i = 0; i < product.length; i++) {
+      var ingredient = Ingredient("", "name", 0, "quantityMeasure");
+      ingredient.name = product[i];
+      ingredient.quantity = quantity[i];
+      ingredient.quantityMeasure = "gram";
+      ingredients.add(ingredient);
+    }
+    recipe.ingredients = ingredients;
+    recipes.add(recipe);
+    await recipesService.updateRecipe(recipe);
+
+    clearRecipe();
   }
 
   @override
@@ -130,19 +142,13 @@ class _AddRecepieForm1 extends State<AddRecipeForm> {
           child: Container(
             child: ElevatedButton(
               onPressed: () {
-                recipes.add(recipeController.text);
-
+                recipesName.add(recipeController.text);
                 description.add(descriptionController.text);
                 int prep = int.parse(preparationTimeController.text);
                 preparationTime.add(prep);
-                products[recipes.last] = product;
-                quantities[recipes.last] = quantity;
-                print(products);
                 createRecipe();
-
-                clearRecepie();
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ShowRecipes()));
+                    MaterialPageRoute(builder: (context) => RecipesPage()));
               },
               child: const Icon(Icons.add),
               style: ElevatedButton.styleFrom(

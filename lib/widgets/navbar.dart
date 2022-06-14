@@ -46,7 +46,7 @@ class _MyHomePageState extends State<MyNavBar> {
 
   final screens = [
     MyProductsPage(),
-    ShowRecipes(),
+    RecipesPage(),
     MarketPage(title: ''),
     Profile()
   ];

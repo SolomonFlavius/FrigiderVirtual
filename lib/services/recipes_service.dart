@@ -89,6 +89,7 @@ class RecipesService {
 
   Future updateRecipe(Recipe recipe) async {
     if (recipe.id == null) {
+      print("ASD");
       return;
     }
     await _recipes.doc(recipe.id).update(recipe.toMapWithoutIdAndIngredients());

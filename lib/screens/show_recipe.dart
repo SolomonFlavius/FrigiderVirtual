@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,26 +14,54 @@ import '../../models/recipe.dart';
 import 'ingredients_show.dart';
 import '../services/recipes_service.dart';
 
-class ShowRecipes extends StatelessWidget {
+final RecipesService recipesService = RecipesService();
+late List<Recipe> recipes = [];
+
+class RecipesPage extends StatefulWidget {
+  const RecipesPage({Key? key}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => ShowRecipes();
+}
+
+class ShowRecipes extends State<RecipesPage> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _getRecipes();
+    });
+  }
+
+  _getRecipes() async {
+    recipes = await recipesService.getRecipesWithIngredients();
+    setState(() => recipes);
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        body: Container(
-          alignment: Alignment.center,
-          decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                Color(0x665ac18e),
-                Color(0x995ac18e),
-                Color(0xcc5ac18e),
-                Color(0xff5ac18e),
-              ])),
-        ),
-      ),
-    );
+        home: GestureDetector(
+            onTap: () {
+              FocusScopeNode currentFocus = FocusScope.of(context);
+              if (!currentFocus.hasPrimaryFocus) {
+                currentFocus.unfocus();
+              }
+            },
+            child: Scaffold(
+                body: Container(
+                    alignment: Alignment.center,
+                    decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                          Color(0x665ac18e),
+                          Color(0x995ac18e),
+                          Color(0xcc5ac18e),
+                          Color(0xff5ac18e),
+                        ])),
+                    child: _ShowRecipes()))));
   }
 }
 
@@ -39,19 +69,40 @@ class _ShowRecipes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(children: <Widget>[
-      Positioned(
-        top: 10,
-        left: 110,
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-          child: const Align(
-            alignment: Alignment.topCenter,
-            child: Text(
-              'Recepies List',
-              style: TextStyle(fontSize: 25),
+      Container(
+        alignment: Alignment.center,
+        child: ListView(children: <Widget>[
+          for (int i = 0; i < recipes.length; i++)
+            Align(
+              alignment: Alignment.center,
+              child: SizedBox(
+                width: 200,
+                height: 70,
+                child: Card(
+                  elevation: 10,
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                      color: Theme.of(context).colorScheme.outline,
+                    ),
+                    borderRadius: const BorderRadius.all(Radius.circular(12)),
+                  ),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => Ingredients(i)));
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.all(12.0),
+                      child: Text(recipes[i].name,
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Color.fromARGB(255, 0, 0, 0))),
+                    ),
+                  ),
+                ),
+              ),
             ),
-          ),
-        ),
+        ]),
       ),
       Positioned(
         top: 500,
@@ -64,45 +115,6 @@ class _ShowRecipes extends StatelessWidget {
                   .push(MaterialPageRoute(builder: (context) => AddRecipe()));
             },
           ),
-        ),
-      ),
-      Positioned(
-        top: 500,
-        right: 300,
-        child: Container(
-          child: ElevatedButton(
-            child: const Icon(Icons.soup_kitchen_outlined),
-            onPressed: () {},
-          ),
-        ),
-      ),
-      Positioned(
-        top: 250,
-        right: 150,
-        child: Container(
-          color: Colors.grey,
-        ),
-      ),
-      Positioned(
-        top: 80,
-        left: 160,
-        child: Container(
-          color: Colors.blue,
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            for (int i = 0; i < recipe.length; i++)
-              Container(
-                child: InkWell(
-                  onTap: () {
-                    print(i);
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.all(12.0),
-                    child: Text("a",
-                        style: TextStyle(fontSize: 20, color: Colors.white)),
-                  ),
-                ),
-              ),
-          ]),
         ),
       ),
     ]);
