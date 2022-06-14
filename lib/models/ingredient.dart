@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class Ingredient {
   String? id;
   String name;
@@ -7,11 +5,11 @@ class Ingredient {
   String quantityMeasure;
 
   Ingredient(
-      this.id,
-      this.name,
-      this.quantity,
-      this.quantityMeasure
-      );
+    this.id,
+    this.name,
+    this.quantity,
+    this.quantityMeasure,
+  );
 
   factory Ingredient.fromMap(Map<String, dynamic>? map) {
     return Ingredient(

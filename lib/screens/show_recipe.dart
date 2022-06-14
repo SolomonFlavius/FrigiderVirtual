@@ -8,17 +8,28 @@ import '../main.dart';
 import 'package:frigider_virtual/screens/add_recipe_form.dart';
 
 import '../../models/recipe.dart';
-import '../../services/recipe_service.dart';
-import 'ingredients_show.dart';
 
-int iterator = 0;
+import 'ingredients_show.dart';
+import '../services/recipes_service.dart';
 
 class ShowRecipes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: _ShowRecipes(),
+        body: Container(
+          alignment: Alignment.center,
+          decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                Color(0x665ac18e),
+                Color(0x995ac18e),
+                Color(0xcc5ac18e),
+                Color(0xff5ac18e),
+              ])),
+        ),
       ),
     );
   }
@@ -83,12 +94,10 @@ class _ShowRecipes extends StatelessWidget {
                 child: InkWell(
                   onTap: () {
                     print(i);
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => IngredientsShow(i)));
                   },
                   child: Padding(
                     padding: EdgeInsets.all(12.0),
-                    child: Text(recipe[i].getName.toString(),
+                    child: Text("a",
                         style: TextStyle(fontSize: 20, color: Colors.white)),
                   ),
                 ),

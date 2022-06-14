@@ -8,10 +8,9 @@ import 'package:intl/intl.dart';
 import '../main.dart';
 import 'show_recipe.dart';
 
-
-import '../../services/recipe_service.dart';
+import '../services/recipes_service.dart';
 import '../../models/recipe.dart';
-import '../../services/recipe_service.dart';
+import '../services/recipes_service.dart';
 
 final Map<String?, List<String?>> products = {};
 final Map<String?, List<int?>> quantities = {};
@@ -22,9 +21,7 @@ List<int?> preparationTime = [];
 List<int?> quantity = [];
 
 List<Recipe> recipe = [];
-RecipesService recipeService = RecipesService();
-
-
+// RecipesService recipeService = RecipesService();
 
 class AddRecipe extends StatelessWidget {
   @override
@@ -81,29 +78,27 @@ class _AddRecepieForm1 extends State<AddRecipeForm> {
     quantityController.clear();
     product = [];
     quantity = [];
-
   }
 
   void createRecipe() {
-    List<Ingredients> ingredients = [];
-    for (int i = 0; i < product.length; i++) {
-      Ingredients ing = Ingredients("", 0, "");
-      ing.setName = product[i];
-      ing.setQuantity = quantity[i];
-      ing.setQuantityMeasuree = "gram";
-      ingredients.add(ing);
-    }
-    Recipe rep = Recipe(
-        recipes.last,
-        description.last,
-        preparationTime.last,
-        Timestamp.fromDate(DateTime.now()),
-        Timestamp.fromDate(DateTime.now()),
-        ingredients);
-    recipe.add(rep);
-    recipeService.addRecipe(recipe.last);
-    print("Am adaugta reteta");
-
+    // List<Ingredients> ingredients = [];
+    // for (int i = 0; i < product.length; i++) {
+    //   Ingredients ing = Ingredients("", 0, "");
+    //   ing.setName = product[i];
+    //   ing.setQuantity = quantity[i];
+    //   ing.setQuantityMeasuree = "gram";
+    //   ingredients.add(ing);
+    // }
+    // Recipe rep = Recipe(
+    //     recipes.last,
+    //     description.last,
+    //     preparationTime.last,
+    //     Timestamp.fromDate(DateTime.now()),
+    //     Timestamp.fromDate(DateTime.now()),
+    //     ingredients);
+    // recipe.add(rep);
+    // recipeService.addRecipe(recipe.last);
+    // print("Am adaugta reteta");
   }
 
   void printProduct() {

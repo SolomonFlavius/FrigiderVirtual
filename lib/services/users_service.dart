@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
-
-import '../models/user.dart';
+import 'package:frigider_virtual/models/user.dart';
 
 class UsersService {
   static final _users = FirebaseFirestore.instance.collection('users');
@@ -31,12 +30,15 @@ class UsersService {
     });
   }
 
+  static Future<DocumentReference> getUserReferenceByEmail(String email) async {
+    return _users.doc(await getUserId(email));
+  }
+
   static Future<String> getUserId(String email) async {
     return _users.where('email', isEqualTo: email).get().then((value) {
       return value.docs[0].id;
     });
   }
-
 
   static Future<User?> getUserByEmail(String email) async {
     return _users.where('email', isEqualTo: email).get().then((value) {
