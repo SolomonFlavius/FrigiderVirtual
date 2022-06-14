@@ -55,8 +55,6 @@ class ShowIngredients extends StatelessWidget {
     recipes.length--;
   }
 
-  void UpdateRecipe() async {}
-
   @override
   Widget build(BuildContext context) {
     return Stack(children: <Widget>[
@@ -157,7 +155,7 @@ class ShowIngredients extends StatelessWidget {
                   ])))),
       Positioned(
         top: 500,
-        right: 300,
+        left: 300,
         child: Container(
           child: ElevatedButton(
             child: const Icon(Icons.delete),
@@ -165,18 +163,6 @@ class ShowIngredients extends StatelessWidget {
               DeleteRecipe();
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => RecipesPage()));
-            },
-          ),
-        ),
-      ),
-      Positioned(
-        top: 500,
-        left: 300,
-        child: Container(
-          child: ElevatedButton(
-            child: const Icon(Icons.update),
-            onPressed: () {
-              UpdateRecipe();
             },
           ),
         ),

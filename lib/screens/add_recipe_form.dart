@@ -55,6 +55,8 @@ class AddRecipeForm extends StatefulWidget {
 }
 
 class _AddRecepieForm1 extends State<AddRecipeForm> {
+  _AddRecepieForm1() {}
+
   final recipeController = TextEditingController();
   final productController = TextEditingController();
   final quantityController = TextEditingController();
