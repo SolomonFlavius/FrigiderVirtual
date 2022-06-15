@@ -22,27 +22,28 @@ List<int> quantity = [];
 class AddRecipe extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: () {
-          FocusScopeNode currentFocus = FocusScope.of(context);
-          if (!currentFocus.hasPrimaryFocus) {
-            currentFocus.unfocus();
-          }
-        },
-        child: Scaffold(
-            body: Container(
-                alignment: Alignment.center,
-                decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                      Color(0x665ac18e),
-                      Color(0x995ac18e),
-                      Color(0xcc5ac18e),
-                      Color(0xff5ac18e),
-                    ])),
-                child: AddRecipeForm())));
+    return MaterialApp(
+        home: GestureDetector(
+            onTap: () {
+              FocusScopeNode currentFocus = FocusScope.of(context);
+              if (!currentFocus.hasPrimaryFocus) {
+                currentFocus.unfocus();
+              }
+            },
+            child: Scaffold(
+                body: Container(
+                    alignment: Alignment.center,
+                    decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                          Color(0x665ac18e),
+                          Color(0x995ac18e),
+                          Color(0xcc5ac18e),
+                          Color(0xff5ac18e),
+                        ])),
+                    child: AddRecipeForm()))));
   }
 }
 
