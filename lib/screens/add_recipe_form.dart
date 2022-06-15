@@ -124,8 +124,9 @@ class _AddRecepieForm1 extends State<AddRecipeForm> {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
+       // const SizedBox(height: 30),
         Positioned(
-          top: 20,
+          top: 110,
           left: 10,
           width: 250,
           child: Container(
@@ -133,13 +134,13 @@ class _AddRecepieForm1 extends State<AddRecipeForm> {
               controller: recipeController,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: 'Enter the recepie name',
+                hintText: 'Enter the recipe name',
               ),
             ),
           ),
         ),
         Positioned(
-          top: 20,
+          top: 120,
           right: 35,
           child: Container(
             child: ElevatedButton(
@@ -161,7 +162,7 @@ class _AddRecepieForm1 extends State<AddRecipeForm> {
           ),
         ),
         Positioned(
-          top: 120,
+          top: 220,
           left: 10,
           width: 250,
           child: Container(
@@ -176,7 +177,7 @@ class _AddRecepieForm1 extends State<AddRecipeForm> {
           ),
         ),
         Positioned(
-          top: 260,
+          top: 360,
           left: 10,
           width: 250,
           child: Container(
@@ -191,7 +192,7 @@ class _AddRecepieForm1 extends State<AddRecipeForm> {
           ),
         ),
         Positioned(
-          top: 350,
+          top: 450,
           left: 10,
           width: 250,
           child: Container(
@@ -208,7 +209,7 @@ class _AddRecepieForm1 extends State<AddRecipeForm> {
 
         // Text to add gram of product
         Positioned(
-          top: 120,
+          top: 220,
           right: 10,
           width: 100,
           child: Container(
@@ -221,7 +222,7 @@ class _AddRecepieForm1 extends State<AddRecipeForm> {
         ),
         // button to add another product
         Positioned(
-            top: 200,
+            top: 300,
             left: 150,
             child: Container(
                 child: ElevatedButton(
