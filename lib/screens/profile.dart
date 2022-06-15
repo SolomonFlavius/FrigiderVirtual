@@ -92,6 +92,11 @@ class _Profile extends State<Profile> {
             }
             await UsersService.updateUserFcmToken(userEmail, null);
             await FirebaseAuth.instance.signOut();
+            Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Auth()),
+          );
           },
         padding: EdgeInsets.all(15),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),

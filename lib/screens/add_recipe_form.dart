@@ -100,8 +100,8 @@ class _AddRecepieForm1 extends State<AddRecipeForm> {
     var ingredients = <Ingredient>[];
     var recipe = Recipe(null, "recipe_name", "description", 215900,
         Timestamp.now(), Timestamp.now(), ingredients);
-    var recipeId = await recipesService.addRecipe(recipe);
-    recipe = await recipesService.getRecipeById(recipeId);
+    //var recipeId = await recipesService.addRecipe(recipe);
+    //recipe = await recipesService.getRecipeById(recipeId);
 
     recipe.name = recipesName.last;
     recipe.description = description.last;
@@ -115,7 +115,7 @@ class _AddRecepieForm1 extends State<AddRecipeForm> {
     }
     recipe.ingredients = ingredients;
     recipes.add(recipe);
-    recipesService.updateRecipe(recipe);
+    await recipesService.addRecipe(recipe);
 
     clearRecipe();
   }

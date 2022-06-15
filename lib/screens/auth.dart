@@ -254,13 +254,13 @@ class _AuthState extends State<Auth> {
       var fcmToken = await NotificationManagement().getFCMToken();
       await UsersService.updateUserFcmToken(email, fcmToken);
 
-      /*Navigator.push(
+      Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => MyNavBar(
                   title: '',
                 )),
-      );*/
+      );
     } on FirebaseAuthException catch (e) {
       showDialog(
           context: context,
