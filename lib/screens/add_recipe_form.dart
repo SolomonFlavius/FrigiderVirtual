@@ -22,28 +22,27 @@ List<int> quantity = [];
 class AddRecipe extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: GestureDetector(
-            onTap: () {
-              FocusScopeNode currentFocus = FocusScope.of(context);
-              if (!currentFocus.hasPrimaryFocus) {
-                currentFocus.unfocus();
-              }
-            },
-            child: Scaffold(
-                body: Container(
-                    alignment: Alignment.center,
-                    decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                          Color(0x665ac18e),
-                          Color(0x995ac18e),
-                          Color(0xcc5ac18e),
-                          Color(0xff5ac18e),
-                        ])),
-                    child: AddRecipeForm()))));
+    return GestureDetector(
+        onTap: () {
+          FocusScopeNode currentFocus = FocusScope.of(context);
+          if (!currentFocus.hasPrimaryFocus) {
+            currentFocus.unfocus();
+          }
+        },
+        child: Scaffold(
+            body: Container(
+                alignment: Alignment.center,
+                decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                      Color(0x665ac18e),
+                      Color(0x995ac18e),
+                      Color(0xcc5ac18e),
+                      Color(0xff5ac18e),
+                    ])),
+                child: AddRecipeForm())));
   }
 }
 
@@ -115,7 +114,7 @@ class _AddRecepieForm1 extends State<AddRecipeForm> {
     }
     recipe.ingredients = ingredients;
     recipes.add(recipe);
-    await recipesService.updateRecipe(recipe);
+    recipesService.updateRecipe(recipe);
 
     clearRecipe();
   }
