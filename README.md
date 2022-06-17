@@ -61,3 +61,5 @@ flutter build apk --debug
 flutter build apk --profile
 flutter build apk --release
 ```
+
+Demo video: https://www.youtube.com/watch?v=sGpTvvRd2W0
